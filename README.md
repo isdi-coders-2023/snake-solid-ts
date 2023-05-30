@@ -193,6 +193,6 @@ We can see the project board of version 1 in:
 
 ## Delivery
 
-We have two main sprints. After class of January 10 we will invert the team responsabilities, Example Team core will be team operations and so on.
+We have two main sprints. After class of June 13 we will invert the team responsabilities, Example Team core will be team operations and so on.
 
-The first version will be presented on January 17 in a production environment.
+The first version will be presented on June 27 in a production environment.

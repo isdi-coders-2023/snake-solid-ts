@@ -1,0 +1,4 @@
+{
+  "*.{ts,tsx}": "npm run husky:lint",
+  "*.{ts,tsx,css,json,md}": "prettier --write"
+}

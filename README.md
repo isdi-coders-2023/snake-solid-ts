@@ -189,7 +189,7 @@ _Operations Team_: It takes care of the rest of the game operations. Menu contro
 
 We can see the project board of version 1 in:
 
-[Kanban Board](https://github.com/orgs/last-mille-112022/projects/2/views/1)
+[Kanban Board](https://github.com/orgs/isdi-coders-2023/projects/1/views/1)
 
 ## Delivery
 

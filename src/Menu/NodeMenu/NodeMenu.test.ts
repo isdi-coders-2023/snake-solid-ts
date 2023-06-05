@@ -1,9 +1,34 @@
+import { type ReadLineNodeMenu } from '../ReadLineMenu/ReadLineMenu';
 import { NodeMenu } from './NodeMenu';
+
+class ReadLineMock implements ReadLineNodeMenu {
+  readLineCallback: ((answer: string) => void) | undefined = undefined;
+  logMessages: string[] = [];
+  closed = false;
+
+  readLineMenu(question: string, callback: (answer: string) => void): void {
+    console.log(question);
+    this.readLineCallback = callback;
+  }
+
+  log(message: string): void {
+    this.logMessages.push(message);
+  }
+
+  close(): void {
+    this.closed = true;
+  }
+
+  getLogMessages(): string[] {
+    return this.logMessages;
+  }
+}
+const readlineMock = new ReadLineMock();
 
 describe('Given a NodeMenu', () => {
   describe('when it is defined', () => {
     test('then it should be a function', () => {
-      const nodeMenu = new NodeMenu();
+      const nodeMenu = new NodeMenu(readlineMock);
 
       expect(nodeMenu).toBeDefined();
     });
@@ -11,8 +36,11 @@ describe('Given a NodeMenu', () => {
 
   describe('when showMenu is called', () => {
     test('then it should print the menu options collection', () => {
-      const nodeMenu = new NodeMenu();
-      expect(nodeMenu.showMenu()).toBe('Start, Exit');
+      const nodeMenu = new NodeMenu(readlineMock);
+      const logsOptions = ['Select one option:', '1. Play Now', '2. Exit'];
+      nodeMenu.showMenu();
+
+      expect(readlineMock.getLogMessages()).toEqual(expect.arrayContaining(logsOptions));
     });
   });
 });

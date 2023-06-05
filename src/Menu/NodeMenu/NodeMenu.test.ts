@@ -22,6 +22,12 @@ class ReadLineMock implements ReadLineNodeMenu {
   getLogMessages(): string[] {
     return this.logMessages;
   }
+
+  simulateUserInput(answer: string): void {
+    if (this.readLineCallback) {
+      this.readLineCallback(answer);
+    }
+  }
 }
 const readlineMock = new ReadLineMock();
 
@@ -41,6 +47,14 @@ describe('Given a NodeMenu', () => {
       nodeMenu.showMenu();
 
       expect(readlineMock.getLogMessages()).toEqual(expect.arrayContaining(logsOptions));
+    });
+  });
+  describe('when showMenu is called and enter an invalid option', () => {
+    test('then it should handle it to display again the menu', () => {
+      const nodeMenu = new NodeMenu(readlineMock);
+      nodeMenu.showMenu();
+      readlineMock.simulateUserInput('3');
+      expect(readlineMock.getLogMessages()).toContain('Invalid option, please re-enter an option');
     });
   });
 });

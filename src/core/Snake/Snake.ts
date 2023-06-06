@@ -1,5 +1,5 @@
-import { SnakeBody } from '../Body/Body';
-import { defaultConfig } from '../constants';
+import { SnakeBody } from '../Body/Body.js';
+import { defaultConfig } from '../constants.js';
 import { type SnakeConfig } from '../types';
 
 export class Snake {
@@ -11,6 +11,10 @@ export class Snake {
 
   getLength() {
     return this.#body.getLength();
+  }
+
+  getBody() {
+    return this.#body.getBodySegments();
   }
 
   #createBody(config: SnakeConfig) {

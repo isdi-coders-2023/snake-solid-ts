@@ -12,3 +12,8 @@ export type SnakeConfig = {
   coordinates: Coordinates;
   direction: Direction;
 };
+
+export type BodySegmentConfig = {
+  color?: string;
+  coordinates: Coordinates;
+};

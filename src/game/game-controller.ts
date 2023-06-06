@@ -1,5 +1,6 @@
+import { Snake } from '../core/Snake/Snake.js';
+import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
-import { type Drawable } from '../ui/render-engine.js';
 
 /**
  * This clase is responsable of control the game
@@ -19,8 +20,18 @@ export class GameController {
      *  2. Draw the element in the UI
      *  3. Renders the entire UI
      */
-    const square: Drawable = { getColor: () => 'red', getCoordinates: () => ({ x: 5, y: 5 }) };
-    this.#renderEngine.drawElement(square);
+    const snake: Snake = new Snake({
+      length: 5,
+      coordinates: { x: 5, y: 5 },
+      direction: Direction.RIGHT,
+    });
+
+    const snakeBody = snake.getBody();
+
+    for (const bodySegment of snakeBody) {
+      this.#renderEngine.drawElement(bodySegment);
+    }
+
     this.#renderEngine.render();
   }
 }

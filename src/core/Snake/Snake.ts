@@ -1,13 +1,19 @@
-import { defaultSnakeLength } from '../constants';
+import { SnakeBody } from '../Body/Body';
+import { defaultConfig } from '../constants';
+import { type SnakeConfig } from '../types';
 
 export class Snake {
-  #snakeLength: number;
+  #body: SnakeBody;
 
-  constructor(length: number = defaultSnakeLength) {
-    this.#snakeLength = length;
+  constructor(config: SnakeConfig = defaultConfig) {
+    this.#body = this.#createBody(config);
   }
 
   getLength() {
-    return this.#snakeLength;
+    return this.#body.getLength();
+  }
+
+  #createBody(config: SnakeConfig) {
+    return new SnakeBody(config);
   }
 }

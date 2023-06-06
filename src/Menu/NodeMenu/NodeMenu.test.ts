@@ -1,4 +1,4 @@
-import { type ReadLineNodeMenu } from '../ReadLineMenu/ReadLineMenu';
+import { type ReadLineNodeMenu } from '../ReadLineNode/ReadLineNode';
 import { NodeMenu } from './NodeMenu';
 
 class ReadLineMock implements ReadLineNodeMenu {
@@ -6,7 +6,7 @@ class ReadLineMock implements ReadLineNodeMenu {
   logMessages: string[] = [];
   closed = false;
 
-  readLineMenu(question: string, callback: (answer: string) => void): void {
+  question(question: string, callback: (answer: string) => void): void {
     console.log(question);
     this.readLineCallback = callback;
   }

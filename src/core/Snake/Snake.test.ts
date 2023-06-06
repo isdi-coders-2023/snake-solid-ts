@@ -24,6 +24,7 @@ describe('Given a Snake', () => {
         expect(snake.getLength()).toBe(10);
       });
     });
+
     describe('With initial coordinates of x=5 and y=3', () => {
       test('Then its length should be 10', () => {
         const snake = new Snake({
@@ -32,6 +33,18 @@ describe('Given a Snake', () => {
           coordinates: { x: 5, y: 3 },
         });
         expect(snake.getLength()).toBe(10);
+      });
+    });
+
+    describe('And it is passed length 2 coordinates (0, 0) and direction "right"', () => {
+      test('Then it should have 2 body segments with coordinates (0, 0) and (1, 0)', () => {
+        const snake = new Snake({ ...defaultConfig, length: 2 });
+        const snakeBody = snake.getBody();
+        const firstSegment = snakeBody[0];
+        const secondSegment = snakeBody[1];
+
+        expect(firstSegment.getCoordinates()).toStrictEqual({ x: 0, y: 0 });
+        expect(secondSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
       });
     });
   });

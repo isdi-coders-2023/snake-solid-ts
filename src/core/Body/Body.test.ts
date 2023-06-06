@@ -1,5 +1,4 @@
 import { defaultConfig } from '../constants';
-import { Direction } from '../types';
 import { SnakeBody } from './Body';
 
 describe('Given a Body', () => {
@@ -8,18 +7,22 @@ describe('Given a Body', () => {
       const body = new SnakeBody(defaultConfig);
       expect(typeof body).toBe('object');
     });
-    test('And it should have a length of 4', () => {
-      const body = new SnakeBody(defaultConfig);
-      expect(body.getLength()).toBe(4);
+
+    describe('And it is passed length 4', () => {
+      test('Then it should have 4 body segments', () => {
+        const body = new SnakeBody(defaultConfig);
+        expect(body.getLength()).toBe(4);
+      });
     });
-    describe('With a configuration object with length 10', () => {
-      test('Then it should have a length of 10', () => {
-        const body = new SnakeBody({
-          length: 10,
-          coordinates: { x: 0, y: 0 },
-          direction: Direction.RIGHT,
-        });
-        expect(body.getLength()).toBe(10);
+
+    describe('And it is passed length 2 coordinates (0, 0) and direction "right"', () => {
+      test('Then it should have 2 body segments with coordinates (0, 0) and (1, 0)', () => {
+        const body = new SnakeBody({ ...defaultConfig, length: 2 });
+        const firstSegment = body.getBodySegments()[0];
+        const secondSegment = body.getBodySegments()[1];
+
+        expect(firstSegment.getCoordinates()).toStrictEqual({ x: 0, y: 0 });
+        expect(secondSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
       });
     });
   });

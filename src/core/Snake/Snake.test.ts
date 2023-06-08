@@ -5,12 +5,12 @@ import { Snake } from './Snake';
 describe('Given a Snake', () => {
   describe('When it is created', () => {
     test('Then it should be an Object', () => {
-      const snake = new Snake(defaultConfig);
+      const snake = new Snake();
       expect(typeof snake).toBe('object');
     });
 
     test('And it should have a length of 4', () => {
-      const snake = new Snake(defaultConfig);
+      const snake = new Snake();
       expect(snake.getLength()).toBe(4);
     });
 
@@ -37,14 +37,14 @@ describe('Given a Snake', () => {
     });
 
     describe('And it is passed length 2 coordinates (0, 0) and direction "right"', () => {
-      test('Then it should have 2 body segments with coordinates (0, 0) and (1, 0)', () => {
+      test('Then it should have 2 body segments with coordinates (0, 0) and (-1, 0)', () => {
         const snake = new Snake({ ...defaultConfig, length: 2 });
         const snakeBody = snake.getBody();
         const firstSegment = snakeBody[0];
         const secondSegment = snakeBody[1];
 
         expect(firstSegment.getCoordinates()).toStrictEqual({ x: 0, y: 0 });
-        expect(secondSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
+        expect(secondSegment.getCoordinates()).toStrictEqual({ x: -1, y: 0 });
       });
     });
   });

@@ -1,6 +1,7 @@
 import { Snake } from '../core/Snake/Snake.js';
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
+import { GameLoop } from './GameLoop/GameLoop.js';
 
 /**
  * This clase is responsable of control the game
@@ -25,13 +26,20 @@ export class GameController {
       coordinates: { x: 5, y: 5 },
       direction: Direction.RIGHT,
     });
-
     const snakeBody = snake.getBody();
 
-    for (const bodySegment of snakeBody) {
-      this.#renderEngine.drawElement(bodySegment);
-    }
+    const gameLoop = new GameLoop();
 
-    this.#renderEngine.render();
+    gameLoop.addAdvanceHandler(() => {
+      this.#renderEngine.clearGameScreen();
+
+      for (const bodySegment of snakeBody) {
+        this.#renderEngine.drawElement(bodySegment);
+      }
+
+      this.#renderEngine.render();
+    });
+
+    gameLoop.start();
   }
 }

@@ -1,9 +1,9 @@
-import Item from './Item';
+import Item, { ItemType } from './Item';
 
 describe('Given a Item Class', () => {
   describe('When its defined', () => {
     test('Then it should exists', () => {
-      const item = new Item();
+      const item = new Item(undefined as unknown as ItemType);
 
       expect(item).toBeDefined();
     });
@@ -11,7 +11,7 @@ describe('Given a Item Class', () => {
 
   describe('When its method getCoordinates is invoke', () => {
     test('Then it should return an object with property "x" and "y"', () => {
-      const item = new Item();
+      const item = new Item(undefined as unknown as ItemType);
 
       const coordinates = item.getCoordinates();
 
@@ -22,7 +22,7 @@ describe('Given a Item Class', () => {
     test('Then it should return a coordinate number between 0 and 100', () => {
       const expectedMaxRange = 100;
       const expectedMinRange = 0;
-      const item = new Item();
+      const item = new Item(undefined as unknown as ItemType);
 
       const coordinates = item.getCoordinates();
 
@@ -30,6 +30,18 @@ describe('Given a Item Class', () => {
       expect(coordinates.y).toBeLessThanOrEqual(expectedMaxRange);
       expect(coordinates.x).toBeGreaterThanOrEqual(expectedMinRange);
       expect(coordinates.y).toBeGreaterThanOrEqual(expectedMinRange);
+    });
+  });
+
+  describe('When its method getColor is invoke and is an item type food', () => {
+    test('Then it should return the color "red"', () => {
+      const expectedColor = 'red';
+      const itemType = ItemType.food;
+      const foodItem = new Item(itemType);
+
+      const foodColor = foodItem.getColor();
+
+      expect(foodColor).toBe(expectedColor);
     });
   });
 });

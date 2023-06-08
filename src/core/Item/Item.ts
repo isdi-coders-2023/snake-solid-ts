@@ -1,10 +1,22 @@
-import { type Collisionable, type Coordinates } from '../../ui/render-engine';
+import { type Coordinates, type Drawable } from '../../ui/render-engine';
 
-class Item implements Collisionable {
+export enum ItemType {
+  food,
+}
+
+class Item implements Drawable {
   #coordinates: Coordinates;
+  #itemType: ItemType;
+  #colorItem: string;
 
-  constructor() {
+  constructor(itemType: ItemType) {
     this.#coordinates = this.#generateCoordinates();
+    this.#itemType = itemType;
+    this.#colorItem = this.#generateItemColor();
+  }
+
+  public getColor(): string {
+    return this.#colorItem;
   }
 
   public getCoordinates(): Coordinates {
@@ -23,6 +35,14 @@ class Item implements Collisionable {
       x: randomPositionX,
       y: randomPositionY,
     };
+  }
+
+  #generateItemColor(): string {
+    const itemColor = {
+      [this.#itemType]: 'red',
+    };
+
+    return itemColor[this.#itemType];
   }
 }
 

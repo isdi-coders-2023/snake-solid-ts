@@ -6,14 +6,10 @@ export class EngineCollisionManager implements EngineCollision {
     const firstCollisionableCoordinates = firstCollisionable.getCoordinates();
     const secondCollisionableCoordinates = secondCollisionable.getCoordinates();
 
-    if (
+    return (
       // eslint-disable-next-line operator-linebreak
       firstCollisionableCoordinates.x === secondCollisionableCoordinates.x &&
       firstCollisionableCoordinates.y === secondCollisionableCoordinates.y
-    ) {
-      return true;
-    }
-
-    return false;
+    );
   }
 }

@@ -16,7 +16,7 @@ describe('Given a NodeMenuItem', () => {
     });
   });
 
-  describe('when register is invoked', () => {
+  describe('when register method is invoked', () => {
     test('then a callback function should be registered', () => {
       const name = 'start';
       const customFunction = jest.fn();
@@ -27,7 +27,7 @@ describe('Given a NodeMenuItem', () => {
     });
   });
 
-  describe('when executeOption is invoked', () => {
+  describe('when executeOption method is invoked', () => {
     test('then a callback function should be called', () => {
       const name = 'start';
       const customFunction = jest.fn();

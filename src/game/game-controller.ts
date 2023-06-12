@@ -1,10 +1,14 @@
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
 import { type Drawable } from '../ui/render-engine.js';
 
+export interface Game {
+  start(): void;
+}
+
 /**
  * This clase is responsable of control the game
  */
-export class GameController {
+export class GameController implements Game {
   #renderEngine: ConsoleRenderEngine;
 
   constructor() {

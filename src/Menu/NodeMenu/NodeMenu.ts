@@ -1,29 +1,16 @@
-import { type OptionsCollection } from '../OptionsCollection/OptionsCollection';
+import { Collection } from '../interfaces/Collection';
 import { type Menu } from '../interfaces/Menu';
 
-// export interface Option {
-//   value: string;
-//   label: string;
-// }
-
-// export type ObjectOption = Record<string, () => void>;
-
-// const options: Collection = [
-//   // { value: '0', label: 'Invalid' },
-//   { value: '1', label: 'Play Now' },
-//   { value: '2', label: 'Exit' },
-// ];
-
 export class NodeMenu implements Menu {
-  #options: OptionsCollection<string> | undefined;
+  #options: Collection<string> | undefined;
 
-  constructor() {
-    this.#options = undefined;
+  constructor(optionsCollection: Collection<string>) {
+    this.#options = optionsCollection;
   }
 
   showMenu(): void {
     console.log('Select one option:');
-    const menuOptions = this.#options?.getList();
+    const menuOptions = this.#options?.getOptions();
     menuOptions?.forEach((option, index) => {
       console.log(`${index + 1}. ${option}`);
     });

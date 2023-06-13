@@ -25,6 +25,8 @@ describe('Given a GameLoop', () => {
 
       expect(advanceHandler1).toHaveBeenCalled();
       expect(advanceHandler1).toHaveBeenCalled();
+
+      gameLoop.stop();
     });
   });
 
@@ -44,6 +46,7 @@ describe('Given a GameLoop', () => {
         expect(advanceHandler1).toHaveBeenCalledTimes(3);
         expect(advanceHandler2).toHaveBeenCalledTimes(3);
         done();
+        gameLoop.stop();
       }, 3000);
     });
   });
@@ -62,6 +65,7 @@ describe('Given a GameLoop', () => {
         gameLoop.stop();
         expect(advanceHandler1).toHaveBeenCalledTimes(1);
         done();
+        gameLoop.stop();
       }, 500);
     });
   });
@@ -84,6 +88,7 @@ describe('Given a GameLoop', () => {
         gameLoop.stop();
         expect(advanceHandler1).toHaveBeenCalledTimes(4);
         done();
+        gameLoop.stop();
       }, 2000);
     });
   });

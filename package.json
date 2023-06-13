@@ -14,7 +14,7 @@
     "test": "jest --watchAll --coverage",
     "lint": "eslint . --ext .ts",
     "husky:lint": "npm run lint -- --fix",
-    "ci:test": "jest --coverage --runInBand",
+    "ci:test": "jest --coverage",
     "prepare": "husky install"
   },
   "author": "Alex González",

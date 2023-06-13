@@ -56,5 +56,13 @@ describe('Given a Body', () => {
         expect(secondSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
       });
     });
+    describe('When it executes a movement downwards with coordinates x=0,y=0', () => {
+      test('Then it should have coordinates x=0,y=1', () => {
+        const body = new SnakeBody({ ...defaultConfig, direction: Direction.DOWN, length: 2 });
+        body.move();
+        const firstSegment = body.getBodySegments()[0];
+        expect(firstSegment.getCoordinates()).toStrictEqual({ x: 0, y: 1 });
+      });
+    });
   });
 });

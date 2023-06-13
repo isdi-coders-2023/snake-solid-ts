@@ -47,5 +47,16 @@ describe('Given a Snake', () => {
         expect(secondSegment.getCoordinates()).toStrictEqual({ x: -1, y: 0 });
       });
     });
+    describe('And it advances from (0, 0) and direction "right"', () => {
+      test('Then its head should have coordinates (1, 0)', () => {
+        const snake = new Snake({ ...defaultConfig, length: 4 });
+        const snakeBody = snake.getBody();
+
+        snake.advance();
+
+        const firstSegment = snakeBody[0];
+        expect(firstSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
+      });
+    });
   });
 });

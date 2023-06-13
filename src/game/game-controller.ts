@@ -23,7 +23,7 @@ export class GameController {
     const snake: Snake = new Snake({
       length: 5,
       coordinates: { x: 5, y: 5 },
-      direction: Direction.RIGHT,
+      direction: Direction.DOWN,
     });
 
     const snakeBody = snake.getBody();

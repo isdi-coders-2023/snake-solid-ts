@@ -24,7 +24,7 @@ export class GameController {
     const snake: Snake = new Snake({
       length: 5,
       coordinates: { x: 5, y: 5 },
-      direction: Direction.DOWN,
+      direction: Direction.RIGHT,
     });
     const snakeBody = snake.getBody();
 
@@ -32,6 +32,7 @@ export class GameController {
 
     gameLoop.addAdvanceHandler(() => {
       this.#renderEngine.clearGameScreen();
+      snake.advance();
 
       for (const bodySegment of snakeBody) {
         this.#renderEngine.drawElement(bodySegment);

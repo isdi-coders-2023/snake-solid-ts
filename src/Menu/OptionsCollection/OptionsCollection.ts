@@ -11,7 +11,7 @@ export class OptionsCollection<T> implements Collection<T> {
     this.#options.push(element);
   }
 
-  getOptions(): T[] {
+  getList(): T[] {
     return this.#options;
   }
 }

@@ -1,27 +1,34 @@
 import { type ReadLineNodeMenu } from '../ReadLineNode/ReadLineNode';
+import { type Collection } from '../interfaces/Collection';
 import { type MenuItem } from '../interfaces/MenuItem';
 
 export class MenuManager {
   #readLine: ReadLineNodeMenu;
-  #actionToExecute: MenuItem;
-  //   #game: Game;
-  constructor(readLine: ReadLineNodeMenu, action: MenuItem) {
+  #menuItems: Collection<MenuItem>;
+
+  constructor(readLine: ReadLineNodeMenu, menuItems: Collection<MenuItem>) {
     this.#readLine = readLine;
-    this.#actionToExecute = action;
+    this.#menuItems = menuItems;
   }
 
   handleOptionChoose(): void {
     this.#readLine.question('Write the number of your choice: ', answer => {
-      const userInputValue = parseInt(answer, 10);
-      // 3
-      console.log(userInputValue);
-      if (userInputValue === 1) {
-        this.#actionToExecute.executeOption();
-      }
-
-      if (userInputValue === 2) {
-        this.#readLine.close();
-      }
+      this.checkAnswer(answer);
     });
+  }
+
+  checkAnswer(answer: string): void {
+    const selectedMenuItem = this.#menuItems
+      .getList()
+      .find((menuItem: MenuItem) => menuItem.getValue() === answer);
+
+    if (!selectedMenuItem) {
+      console.log('This is an invalid option');
+      this.handleOptionChoose();
+    }
+
+    if (selectedMenuItem) {
+      selectedMenuItem.executeOption();
+    }
   }
 }

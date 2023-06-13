@@ -12,7 +12,7 @@ describe('Given a NodeMenu', () => {
   describe('when showMenu method is called', () => {
     test('then it should print the menu items collection', () => {
       const menuOptions = new MenuItemsCollection();
-      const option1 = new NodeMenuItem('start');
+      const option1 = new NodeMenuItem('start', '1');
       menuOptions.add(option1);
       const nodeMenu = new NodeMenu(menuOptions);
       nodeMenu.showMenu();

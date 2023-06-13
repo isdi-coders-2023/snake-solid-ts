@@ -19,7 +19,7 @@ describe('Given a MenuItemsCollection', () => {
   describe('when add method is invoked', () => {
     test('then it should add an element into menuItems array', () => {
       const menuOptions = new MenuItemsCollection();
-      const option1 = new NodeMenuItem('start');
+      const option1 = new NodeMenuItem('start', '1');
       menuOptions.add(option1);
 
       expect(menuOptions.getList()).toEqual([option1]);

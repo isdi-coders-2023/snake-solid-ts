@@ -1,63 +1,21 @@
-import { OptionsCollection } from '../OptionsCollection/OptionsCollection';
-import { NodeMenu } from './NodeMenu';
-
-// class ReadLineMock implements ReadLineNodeMenu {
-//   readLineCallback: ((answer: string) => void) | undefined = undefined;
-//   logMessages: string[] = [];
-//   closed = false;
-
-//   question(question: string, callback: (answer: string) => void): void {
-//     console.log(question);
-//     this.readLineCallback = callback;
-//   }
-
-//   log(message: string): void {
-//     this.logMessages.push(message);
-//   }
-
-//   close(): void {
-//     this.closed = true;
-//   }
-
-//   getLogMessages(): string[] {
-//     return this.logMessages;
-//   }
-
-//   simulateUserInput(answer: string): void {
-//     if (this.readLineCallback) {
-//       this.readLineCallback(answer);
-//     }
-//   }
-// }
-// const readlineMock = new ReadLineMock();
+import MenuItemsCollection from '../MenuItemsCollection/MenuItemsCollection';
+import NodeMenuItem from '../NodeMenuItem/NodeMenuItem';
+import NodeMenu from './NodeMenu';
 
 describe('Given a NodeMenu', () => {
   describe('when it is defined', () => {
     test('then it should be a function', () => {
-      const nodeMenu = new NodeMenu();
-
-      expect(nodeMenu).toBeDefined();
+      expect(typeof NodeMenu).toBe('function');
     });
   });
 
-  describe('when showMenu is called', () => {
-    test('then it should print the menu options collection', () => {
-      const nodeMenu = new NodeMenu();
-      const options = new OptionsCollection();
-      options.add('1. Play Now');
-      // const logsOptions = ['Select one option:', '1. Play Now', '2. Exit'];
+  describe('when showMenu method is called', () => {
+    test('then it should print the menu items collection', () => {
+      const menuOptions = new MenuItemsCollection();
+      const option1 = new NodeMenuItem('start');
+      menuOptions.add(option1);
+      const nodeMenu = new NodeMenu(menuOptions);
       nodeMenu.showMenu();
-
-      // expect(readlineMock.getLogMessages()).toEqual(expect.arrayContaining(logsOptions));
     });
   });
-
-  // describe('when showMenu is called and enter an invalid option', () => {
-  //   test('then it should handle it to display again the menu', () => {
-  //     const nodeMenu = new NodeMenu(readlineMock);
-  //     nodeMenu.showMenu();
-  //     readlineMock.simulateUserInput('3');
-  //     expect(readlineMock.getLogMessages()).toContain('Invalid option, please re-enter an option');
-  //   });
-  // });
 });

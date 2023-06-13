@@ -1,39 +1,22 @@
-import { Collection } from '../interfaces/Collection';
+import type MenuItemsCollection from '../MenuItemsCollection/MenuItemsCollection';
 import { type Menu } from '../interfaces/Menu';
 
-export class NodeMenu implements Menu {
-  #options: Collection<string> | undefined;
+class NodeMenu implements Menu {
+  #nodeMenuItems: MenuItemsCollection;
 
-  constructor(optionsCollection: Collection<string>) {
-    this.#options = optionsCollection;
+  constructor(menuItems: MenuItemsCollection) {
+    this.#nodeMenuItems = menuItems;
   }
 
   showMenu(): void {
     console.log('Select one option:');
-    const menuOptions = this.#options?.getOptions();
-    menuOptions?.forEach((option, index) => {
-      console.log(`${index + 1}. ${option}`);
+
+    const menuItemsList = this.#nodeMenuItems.getList();
+
+    menuItemsList.forEach((option, index) => {
+      console.log(`${index + 1}. ${option.getName()}`);
     });
-
-    // Manager class
   }
-
-  // this.#readLineNode.question('Write the number of your choice: ', answer => {
-  //     const userInputValue = parseInt(answer, 10);
-  //     // 3
-  //     this.#userSelectedOption = options[userInputValue - 1];
-
-  //     //  this.#userSelectedOption = options[userInputValue - 1];
-  //   });
-
-  // handleExit(): void {
-  //   this.#readLineNode.log('See you soon!');
-  //   this.#readLineNode.close();
-  // }
-
-  // handleInvalidValue(): void {
-  //   console.log('handleInvalidValue');
-  //   this.#readLineNode.log('Invalid option, please re-enter an option');
-  //   this.showMenu();
-  // }
 }
+
+export default NodeMenu;

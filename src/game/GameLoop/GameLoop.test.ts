@@ -65,4 +65,26 @@ describe('Given a GameLoop', () => {
       }, 500);
     });
   });
+
+  describe('When it is started, the speed is changed to 500 after 1000 ms, and stopped after 2000ms', () => {
+    test('Then it should advance all the advancables 4 times', done => {
+      expect.assertions(1);
+      const advanceHandler1: AdvanceHandler = jest.fn();
+
+      const gameLoop = new GameLoop(1000);
+
+      gameLoop.addAdvanceHandler(advanceHandler1);
+      gameLoop.start();
+
+      setTimeout(() => {
+        gameLoop.changeSpeed(500);
+      }, 1000);
+
+      setTimeout(() => {
+        gameLoop.stop();
+        expect(advanceHandler1).toHaveBeenCalledTimes(4);
+        done();
+      }, 2000);
+    });
+  });
 });

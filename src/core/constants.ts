@@ -1,6 +1,6 @@
-import { Direction, type BoardConfig } from './types.js';
+import { Direction, type BoardConfig, type SnakeConfig } from './types.js';
 
-export const defaultSnakeConfig = {
+export const defaultSnakeConfig: SnakeConfig = {
   length: 4,
   direction: Direction.RIGHT,
   coordinates: { x: 0, y: 0 },

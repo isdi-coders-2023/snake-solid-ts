@@ -1,5 +1,6 @@
 import { type Coordinates } from '../../../ui/render-engine';
+import { type Board } from '../../Board/Board';
 
 export interface MovementStrategy {
-  execute(coordinates: Coordinates): Coordinates;
+  execute(coordinates: Coordinates, board: Board): Coordinates;
 }

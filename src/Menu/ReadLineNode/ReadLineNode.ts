@@ -1,10 +1,5 @@
 import * as readline from 'readline';
-
-export interface ReadLineNodeMenu {
-  question(question: string, callback: (answer: string) => void): void;
-  log(message: string): void;
-  close(): void;
-}
+import { type ReadLineNodeMenu } from '../interfaces/ReadLineNodeMenu';
 
 export default class ReadLineNode implements ReadLineNodeMenu {
   #readLine: readline.Interface;
@@ -25,6 +20,7 @@ export default class ReadLineNode implements ReadLineNodeMenu {
   }
 
   close(): void {
+    this.log('See you soon!');
     this.#readLine.close();
   }
 }

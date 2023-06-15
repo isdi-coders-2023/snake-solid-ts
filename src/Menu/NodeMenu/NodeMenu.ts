@@ -1,7 +1,7 @@
 import { type Collection } from '../interfaces/Collection';
 import { type Menu } from '../interfaces/Menu';
 import { type MenuItem } from '../interfaces/MenuItem';
-import { type ReadLineNodeMenu } from '../ReadLineNode/ReadLineNode';
+import { type ReadLineNodeMenu } from '../interfaces/ReadLineNodeMenu';
 
 class NodeMenu implements Menu {
   #nodeMenuItems: Collection<MenuItem>;
@@ -23,11 +23,11 @@ class NodeMenu implements Menu {
 
   handleOptionChoose(): void {
     this.#readLine.question('Write the number of your choice: ', answer => {
-      this.checkAnswer(answer);
+      this.#checkAnswer(answer);
     });
   }
 
-  checkAnswer(answer: string): void {
+  #checkAnswer(answer: string): void {
     const selectedMenuItem = this.#nodeMenuItems
       .getList()
       .find((menuItem: MenuItem) => menuItem.getValue() === answer);

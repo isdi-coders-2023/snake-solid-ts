@@ -92,4 +92,20 @@ describe('Given a GameLoop', () => {
       }, 2000);
     });
   });
+
+  describe('When it is started and stopped after 1000ms', () => {
+    test('Then the total running time should be 1000ms', done => {
+      expect.assertions(1);
+
+      const gameLoop = new GameLoop();
+
+      gameLoop.start();
+
+      setTimeout(() => {
+        gameLoop.stop();
+        expect(gameLoop.getTotalRunningTime()).toBe(1000);
+        done();
+      }, 1000);
+    });
+  });
 });

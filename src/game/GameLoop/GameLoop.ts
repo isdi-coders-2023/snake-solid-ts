@@ -6,6 +6,7 @@ export class GameLoop {
   #speed;
   #interval: NodeJS.Timer | undefined;
   #isRunning = false;
+  #runnningTime = 0;
 
   constructor(speed = defaultGameSpeed) {
     this.#speed = speed;
@@ -13,15 +14,24 @@ export class GameLoop {
 
   start() {
     this.#isRunning = true;
-    this.#advanceAll();
+    this.#tick();
     this.#interval = setInterval(() => {
-      this.#advanceAll();
+      this.#tick();
     }, this.#speed);
+  }
+
+  #tick() {
+    this.#advanceAll();
+    this.#increaseRunningTime();
   }
 
   stop() {
     this.#isRunning = false;
     this.#clearInterval();
+  }
+
+  getTotalRunningTime() {
+    return this.#runnningTime;
   }
 
   addAdvanceHandler(advanceable: AdvanceHandler) {
@@ -45,5 +55,9 @@ export class GameLoop {
 
   #clearInterval() {
     clearInterval(this.#interval);
+  }
+
+  #increaseRunningTime() {
+    this.#runnningTime += this.#speed;
   }
 }

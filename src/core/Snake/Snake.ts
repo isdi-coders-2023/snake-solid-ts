@@ -20,4 +20,8 @@ export class Snake {
   #createBody(config: SnakeConfig) {
     return new SnakeBody(config);
   }
+
+  advance() {
+    this.#body.move();
+  }
 }

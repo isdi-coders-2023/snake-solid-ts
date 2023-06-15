@@ -1,5 +1,6 @@
 import { type Coordinates, type Drawable } from '../../ui/render-engine';
 import { BodySegment } from '../BodySegment/BodySegment.js';
+import { MovementManager } from '../movement/MovementManager/MovementManager.js';
 import { Direction, type SnakeConfig } from '../types.js';
 
 export class SnakeBody {
@@ -7,10 +8,12 @@ export class SnakeBody {
   #coordinates: Coordinates;
   #direction: Direction;
   #coordinatesMap: Map<Direction, (position: number) => Coordinates>;
+  #movementManager: MovementManager;
 
   constructor({ length, coordinates, direction }: SnakeConfig) {
     this.#direction = direction;
     this.#coordinates = coordinates;
+    this.#movementManager = new MovementManager();
     this.#coordinatesMap = new Map();
     this.#createDirectionToCoordinateMap();
     this.#segments = new Array(length).fill(null).map((_emptySegment, position) => {
@@ -26,6 +29,24 @@ export class SnakeBody {
 
   getBodySegments() {
     return this.#segments;
+  }
+
+  move() {
+    this.#movementManager.setDirection(this.#direction);
+    const newHeadCoordinates = this.#movementManager.move(this.#coordinates);
+    this.#coordinates = newHeadCoordinates;
+    const newHead = new BodySegment({ coordinates: newHeadCoordinates });
+
+    this.#removeLastSegment();
+    this.addNewHead(newHead);
+  }
+
+  addNewHead(segment: BodySegment) {
+    this.#segments.unshift(segment);
+  }
+
+  #removeLastSegment() {
+    this.#segments.pop();
   }
 
   #createDirectionToCoordinateMap() {

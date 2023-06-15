@@ -7,3 +7,5 @@ export const defaultConfig = {
 };
 
 export const defaultBodySegmentColor = 'white';
+
+export const defaultGameSpeed = 200;

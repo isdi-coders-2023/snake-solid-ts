@@ -15,10 +15,10 @@ class ItemManager implements ItemManagement {
     const timeLeft = this.#generationItemTime - gameLoopTime;
 
     if (timeLeft !== 0) {
-      return undefined;
+      return new Item(itemType);
     }
 
-    return new Item(itemType);
+    return undefined;
   }
 }
 export default ItemManager;

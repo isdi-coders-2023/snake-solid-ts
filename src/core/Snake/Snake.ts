@@ -1,11 +1,11 @@
 import { SnakeBody } from '../Body/Body.js';
-import { defaultConfig } from '../constants.js';
+import { defaultSnakeConfig } from '../constants.js';
 import { type SnakeConfig } from '../types';
 
 export class Snake {
   #body: SnakeBody;
 
-  constructor(config: SnakeConfig = defaultConfig) {
+  constructor(config: SnakeConfig = defaultSnakeConfig) {
     this.#body = this.#createBody(config);
   }
 

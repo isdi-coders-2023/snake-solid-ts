@@ -17,3 +17,17 @@ export type BodySegmentConfig = {
   color?: string;
   coordinates: Coordinates;
 };
+
+export type BoardConfig = {
+  isInfinite: boolean;
+  height: number;
+  width: number;
+};
+
+export type BoardBoundaries = {
+  minX: number;
+  minY: number;
+  maxX: number;
+  maxY: number;
+  isInfinite: boolean;
+};

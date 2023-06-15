@@ -1,4 +1,4 @@
-import { defaultConfig } from '../constants';
+import { defaultSnakeConfig } from '../constants';
 import { Direction } from '../types';
 import { Snake } from './Snake';
 
@@ -38,7 +38,7 @@ describe('Given a Snake', () => {
 
     describe('And it is passed length 2 coordinates (0, 0) and direction "right"', () => {
       test('Then it should have 2 body segments with coordinates (0, 0) and (-1, 0)', () => {
-        const snake = new Snake({ ...defaultConfig, length: 2 });
+        const snake = new Snake({ ...defaultSnakeConfig, length: 2 });
         const snakeBody = snake.getBody();
         const firstSegment = snakeBody[0];
         const secondSegment = snakeBody[1];
@@ -49,7 +49,7 @@ describe('Given a Snake', () => {
     });
     describe('And it advances from (0, 0) and direction "right"', () => {
       test('Then its head should have coordinates (1, 0)', () => {
-        const snake = new Snake({ ...defaultConfig, length: 4 });
+        const snake = new Snake({ ...defaultSnakeConfig, length: 4 });
         const snakeBody = snake.getBody();
 
         snake.advance();

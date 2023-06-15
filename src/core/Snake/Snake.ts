@@ -1,5 +1,6 @@
 import { SnakeBody } from '../Body/Body.js';
 import { defaultSnakeConfig } from '../constants.js';
+import { type MovementManager } from '../movement/MovementManager/MovementManager.js';
 import { type SnakeConfig } from '../types';
 
 export class Snake {
@@ -21,7 +22,7 @@ export class Snake {
     return new SnakeBody(config);
   }
 
-  advance() {
-    this.#body.move();
+  advance(movementManager: MovementManager) {
+    this.#body.move(movementManager);
   }
 }

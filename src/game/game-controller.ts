@@ -1,4 +1,6 @@
+import { Board } from '../core/Board/Board.js';
 import { Snake } from '../core/Snake/Snake.js';
+import { MovementManager } from '../core/movement/MovementManager/MovementManager.js';
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
 import { GameLoop } from './GameLoop/GameLoop.js';
@@ -30,9 +32,14 @@ export class GameController {
 
     const gameLoop = new GameLoop();
 
+    const board = new Board();
+
+    const snakeMovementManager = new MovementManager(board);
+
     gameLoop.addAdvanceHandler(() => {
       this.#renderEngine.clearGameScreen();
-      snake.advance();
+
+      snake.advance(snakeMovementManager);
 
       for (const bodySegment of snakeBody) {
         this.#renderEngine.drawElement(bodySegment);

@@ -1,4 +1,6 @@
+import { Board } from '../Board/Board';
 import { defaultSnakeConfig } from '../constants';
+import { MovementManager } from '../movement/MovementManager/MovementManager';
 import { Direction } from '../types';
 import { SnakeBody } from './Body';
 
@@ -59,7 +61,9 @@ describe('Given a Body', () => {
     describe('When it executes a movement downwards with coordinates x=0,y=0', () => {
       test('Then it should have coordinates x=0,y=1', () => {
         const body = new SnakeBody({ ...defaultSnakeConfig, direction: Direction.DOWN, length: 2 });
-        body.move();
+        const board = new Board();
+        const snakeMovementManager = new MovementManager(board);
+        body.move(snakeMovementManager);
         const firstSegment = body.getBodySegments()[0];
         expect(firstSegment.getCoordinates()).toStrictEqual({ x: 0, y: 1 });
       });

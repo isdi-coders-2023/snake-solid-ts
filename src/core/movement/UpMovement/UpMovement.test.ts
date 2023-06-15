@@ -1,4 +1,5 @@
 import { Board } from '../../Board/Board';
+import { type BoardConfig } from '../../types';
 import { UpMovement } from './UpMovement';
 
 describe('Given an UpMovement', () => {
@@ -16,10 +17,15 @@ describe('Given an UpMovement', () => {
     });
   });
   describe('When executes a movement beyond vertical board limits and x=5', () => {
-    test('Then it should return coordinates x=5, y=0', () => {
+    test('Then it should return coordinates x=5, y=11', () => {
       const movementUp = new UpMovement();
-      const board = new Board({ width: 10, height: 10, isInfinite: true });
-      expect(movementUp.execute({ x: 5, y: 0 }, board)).toEqual({ x: 5, y: 10 });
+      const borderWidth = 1;
+      const boardConfig: BoardConfig = { width: 10, height: 10, isInfinite: true, borderWidth };
+      const board = new Board(boardConfig);
+      expect(movementUp.execute({ x: 5, y: borderWidth }, board)).toEqual({
+        x: 5,
+        y: borderWidth + boardConfig.height,
+      });
     });
   });
 });

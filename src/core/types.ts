@@ -22,6 +22,7 @@ export type BoardConfig = {
   isInfinite: boolean;
   height: number;
   width: number;
+  borderWidth?: number;
 };
 
 export type BoardBoundaries = {

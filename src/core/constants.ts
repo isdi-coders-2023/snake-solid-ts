@@ -10,8 +10,11 @@ export const defaultBodySegmentColor = 'white';
 
 export const defaultGameSpeed = 200;
 
+export const defaultBorderWidth = 1;
+
 export const defaultBoardConfig: BoardConfig = {
   isInfinite: true,
   height: 100,
   width: 100,
+  borderWidth: defaultBorderWidth,
 };

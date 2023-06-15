@@ -23,6 +23,9 @@ export class GameController {
      *  2. Draw the element in the UI
      *  3. Renders the entire UI
      */
+
+    const board = new Board({ isInfinite: true, height: 20, width: 100, borderWidth: 1 });
+
     const snake: Snake = new Snake({
       length: 5,
       coordinates: { x: 5, y: 5 },
@@ -31,8 +34,6 @@ export class GameController {
     const snakeBody = snake.getBody();
 
     const gameLoop = new GameLoop();
-
-    const board = new Board();
 
     const snakeMovementManager = new MovementManager(board);
 
@@ -45,9 +46,19 @@ export class GameController {
         this.#renderEngine.drawElement(bodySegment);
       }
 
+      this.#drawBorders(board);
+
       this.#renderEngine.render();
     });
 
     gameLoop.start();
+  }
+
+  #drawBorders(board: Board) {
+    const boardBorders = board.getBorders();
+
+    for (const border of boardBorders) {
+      this.#renderEngine.drawElement(border);
+    }
   }
 }

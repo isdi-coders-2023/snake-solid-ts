@@ -1,5 +1,5 @@
 import { Board } from '../../Board/Board';
-import { Direction } from '../../types';
+import { Direction, type BoardConfig } from '../../types';
 import { MovementManager } from './MovementManager';
 describe('Given a MovementManager', () => {
   const board = new Board({ height: 10, width: 10, isInfinite: true });
@@ -58,10 +58,16 @@ describe('Given a MovementManager', () => {
     });
   });
   describe('When executes a movement beyond horizontal board limits and y=5 and direction is right', () => {
-    test('Then it should return x=0,y=5', () => {
+    test('Then it should return x=1,y=5', () => {
+      const borderWidth = 1;
+      const boardConfig: BoardConfig = { width: 10, height: 10, isInfinite: true, borderWidth };
+      const board = new Board({ height: 10, width: 10, isInfinite: true });
       const movementManager = new MovementManager(board);
       movementManager.setDirection(Direction.RIGHT);
-      expect(movementManager.move({ x: 10, y: 5 })).toEqual({ x: 0, y: 5 });
+      expect(movementManager.move({ x: boardConfig.width + borderWidth, y: 5 })).toEqual({
+        x: borderWidth,
+        y: 5,
+      });
     });
   });
 });

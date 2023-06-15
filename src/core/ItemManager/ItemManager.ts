@@ -1,7 +1,7 @@
 import Item, { type ItemType } from '../Item/Item';
 
 interface ItemManagement {
-  generateItem(itemType: ItemType, gameLoopTime: number): Item | undefined;
+  generateItem(itemType: ItemType, gameLoopTime: number): Item | void;
 }
 
 class ItemManager implements ItemManagement {
@@ -11,14 +11,14 @@ class ItemManager implements ItemManagement {
     this.#generationItemTime = generationItemTime;
   }
 
-  generateItem(itemType: ItemType, gameLoopTime: number): Item | undefined {
+  generateItem(itemType: ItemType, gameLoopTime: number): Item | void {
     const timeLeft = this.#generationItemTime - gameLoopTime;
 
-    if (timeLeft !== 0) {
-      return new Item(itemType);
+    if (timeLeft <= 0) {
+      return;
     }
 
-    return undefined;
+    return new Item(itemType);
   }
 }
 export default ItemManager;

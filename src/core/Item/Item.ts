@@ -28,8 +28,8 @@ class Item implements Drawable {
   }
 
   #generateCoordinates() {
-    const randomPositionX = this.#getRandomInteger(100);
-    const randomPositionY = this.#getRandomInteger(100);
+    const randomPositionX = this.#getRandomInteger(30);
+    const randomPositionY = this.#getRandomInteger(30);
 
     return {
       x: randomPositionX,

@@ -1,3 +1,6 @@
+import type Item from '../core/Item/Item.js';
+import { ItemType } from '../core/Item/Item.js';
+import type ItemManagement from '../core/ItemManager/type.js';
 import { Snake } from '../core/Snake/Snake.js';
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
@@ -8,10 +11,15 @@ import { GameLoop } from './GameLoop/GameLoop.js';
  */
 export class GameController {
   #renderEngine: ConsoleRenderEngine;
+  #drawableItems: Set<Item> = new Set<Item>([]);
+  #itemCreator: ItemManagement;
+  #gameLoop: GameLoop;
 
-  constructor() {
+  constructor(itemManager: ItemManagement) {
     /** SORRY FOR THIS SOLID VIOLATION */
     this.#renderEngine = new ConsoleRenderEngine();
+    this.#gameLoop = new GameLoop();
+    this.#itemCreator = itemManager;
   }
 
   start() {
@@ -28,11 +36,15 @@ export class GameController {
     });
     const snakeBody = snake.getBody();
 
-    const gameLoop = new GameLoop();
-
-    gameLoop.addAdvanceHandler(() => {
+    this.#gameLoop.addAdvanceHandler(() => {
       this.#renderEngine.clearGameScreen();
       snake.advance();
+
+      this.#storeDrawableItems(ItemType.food);
+
+      for (const item of this.#drawableItems) {
+        this.#renderEngine.drawElement(item);
+      }
 
       for (const bodySegment of snakeBody) {
         this.#renderEngine.drawElement(bodySegment);
@@ -41,6 +53,14 @@ export class GameController {
       this.#renderEngine.render();
     });
 
-    gameLoop.start();
+    this.#gameLoop.start();
+  }
+
+  #storeDrawableItems(itemType: ItemType): void {
+    const item = this.#itemCreator.generateItem(itemType, this.#gameLoop.getTotalRunningTime());
+
+    if (item) {
+      this.#drawableItems.add(item);
+    }
   }
 }

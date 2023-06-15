@@ -1,8 +1,5 @@
-import Item, { type ItemType } from '../Item/Item';
-
-interface ItemManagement {
-  generateItem(itemType: ItemType, gameLoopTime: number): Item | void;
-}
+import Item, { type ItemType } from '../Item/Item.js';
+import type ItemManagement from './type';
 
 class ItemManager implements ItemManagement {
   #generationItemTime: number;

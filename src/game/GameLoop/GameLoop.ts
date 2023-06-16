@@ -40,7 +40,7 @@ export class GameLoop {
 
   #advanceAll() {
     this.#advanceables.forEach(advanceable => {
-      advanceable();
+      advanceable(this);
     });
   }
 
@@ -51,6 +51,10 @@ export class GameLoop {
     if (this.#isRunning) {
       this.start();
     }
+  }
+
+  getCurrentSpeed(): number {
+    return this.#speed;
   }
 
   #clearInterval() {

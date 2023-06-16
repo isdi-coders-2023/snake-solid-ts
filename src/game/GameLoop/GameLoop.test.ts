@@ -10,6 +10,10 @@ describe('Given a GameLoop', () => {
     test('Then it should be an object', () => {
       expect(typeof new GameLoop()).toBe('object');
     });
+
+    test('Then its speed should be 200', () => {
+      expect(new GameLoop().getCurrentSpeed()).toBe(200);
+    });
   });
 
   describe('When it is started', () => {

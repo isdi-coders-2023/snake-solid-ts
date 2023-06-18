@@ -1,24 +1,27 @@
-import Item, { type ItemType } from '../Item/Item';
+import { type Board } from '../Board/Board.js';
+import Item, { type ItemType } from '../Item/Item.js';
+import type DrawableManager from './type';
 
-interface ItemManagement {
-  generateItem(itemType: ItemType, gameLoopTime: number): Item | void;
-}
-
-class ItemManager implements ItemManagement {
+class ItemManager implements DrawableManager {
   #generationItemTime: number;
+  #drawableItems: Map<number, Item> = new Map<number, Item>();
 
-  constructor(generationItemTime: number) {
+  constructor(generationItemTime = 15000) {
     this.#generationItemTime = generationItemTime;
   }
 
-  generateItem(itemType: ItemType, gameLoopTime: number): Item | void {
+  public generateItem(itemType: ItemType, gameLoopTime: number, board: Board): void {
     const timeLeft = this.#generationItemTime - gameLoopTime;
 
     if (timeLeft <= 0) {
       return;
     }
 
-    return new Item(itemType);
+    this.#drawableItems.set(gameLoopTime, new Item(itemType, board));
+  }
+
+  public getItems(): Map<number, Item> {
+    return this.#drawableItems;
   }
 }
 export default ItemManager;

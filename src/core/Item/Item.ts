@@ -1,4 +1,5 @@
 import { type Coordinates, type Drawable } from '../../ui/render-engine';
+import { type Board } from '../Board/Board';
 
 export enum ItemType {
   food,
@@ -8,11 +9,13 @@ class Item implements Drawable {
   #coordinates: Coordinates;
   #itemType: ItemType;
   #colorItem: string;
+  #board: Board;
 
-  constructor(itemType: ItemType) {
-    this.#coordinates = this.#generateCoordinates();
+  constructor(itemType: ItemType, snakeBoard: Board) {
     this.#itemType = itemType;
     this.#colorItem = this.#generateItemColor();
+    this.#board = snakeBoard;
+    this.#coordinates = this.#generateCoordinates();
   }
 
   public getColor(): string {
@@ -23,13 +26,20 @@ class Item implements Drawable {
     return this.#coordinates;
   }
 
-  #getRandomInteger(maxNumber: number): number {
-    return Math.floor(Math.random() * maxNumber);
+  #getRandomInteger(maxNumber: number, minNumber: number): number {
+    const randomInteger = Math.floor(Math.random() * maxNumber);
+
+    if (randomInteger < minNumber) {
+      return minNumber;
+    }
+
+    return randomInteger;
   }
 
   #generateCoordinates() {
-    const randomPositionX = this.#getRandomInteger(100);
-    const randomPositionY = this.#getRandomInteger(100);
+    const { maxX, minX, minY, maxY } = this.#board.getBoundaries();
+    const randomPositionX = this.#getRandomInteger(maxX, minX);
+    const randomPositionY = this.#getRandomInteger(maxY, minY);
 
     return {
       x: randomPositionX,

@@ -1,4 +1,5 @@
-import { GameController } from './game/game-controller.js';
+import createNodeMenu from './Menu/createNodeMenu.js';
 
-const game = new GameController();
-game.start();
+const nodeMenu = createNodeMenu();
+nodeMenu.showMenu();
+nodeMenu.handleOptionChoose();

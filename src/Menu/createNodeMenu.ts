@@ -3,8 +3,9 @@ import MenuItemsCollection from './MenuItemsCollection/MenuItemsCollection.js';
 import NodeMenu from './NodeMenu/NodeMenu.js';
 import NodeMenuItem from './NodeMenuItem/NodeMenuItem.js';
 import ReadLineNode from './ReadLineNode/ReadLineNode.js';
+import { type Menu } from './interfaces/Menu.js';
 
-const createNodeMenu = () => {
+const createNodeMenu = (): Menu => {
   const readline = new ReadLineNode();
 
   const startAction = () => {

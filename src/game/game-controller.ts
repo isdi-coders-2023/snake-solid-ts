@@ -48,7 +48,10 @@ export class GameController implements Game {
         ['a', Direction.LEFT],
         ['d', Direction.RIGHT],
       ]);
-      snake.changeDirection(keyDirectionMap.get(key.name)!);
+
+      if (Array.from(keyDirectionMap.keys()).includes(key.name)) {
+        snake.changeDirection(keyDirectionMap.get(key.name)!);
+      }
     });
 
     gameLoop.addAdvanceHandler(() => {

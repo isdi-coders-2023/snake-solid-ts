@@ -2,11 +2,12 @@ import { Board } from '../Board/Board';
 import Item, { ItemType } from './Item';
 
 const board = new Board();
+const coordinates = board.getBoundaries();
 
 describe('Given a Item Class', () => {
   describe('When its defined', () => {
     test('Then it should exists', () => {
-      const item = new Item(undefined as unknown as ItemType, board);
+      const item = new Item(undefined as unknown as ItemType);
 
       expect(item).toBeDefined();
     });
@@ -14,7 +15,7 @@ describe('Given a Item Class', () => {
 
   describe('When its method getCoordinates is invoke', () => {
     test('Then it should return an object with property "x" and "y"', () => {
-      const item = new Item(undefined as unknown as ItemType, board);
+      const item = new Item(undefined as unknown as ItemType);
 
       const coordinates = item.getCoordinates();
 

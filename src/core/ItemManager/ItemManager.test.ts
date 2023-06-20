@@ -9,7 +9,7 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
 
   describe('When it is defined', () => {
     test('Then it should exist', () => {
-      const itemManager = new ItemManager();
+      const itemManager = new ItemManager(board, generationItemTime);
 
       expect(itemManager).toBeDefined();
     });
@@ -17,9 +17,9 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
 
   describe('When its method generateItem is invoked with an ItemType food, a gameLoopTime of 12 and a board', () => {
     test('Then it should instanciated an Item', () => {
-      const itemManager = new ItemManager(generationItemTime);
+      const itemManager = new ItemManager(board, generationItemTime);
 
-      itemManager.generateItem(ItemType.food, gameLoopTime, board);
+      itemManager.generateItem(ItemType.food, gameLoopTime);
       const items = itemManager.getItems();
 
       expect(items.get(gameLoopTime)).toBeInstanceOf(Item);
@@ -29,9 +29,9 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
   describe('When its method generateItem is invoked with an ItemType food, a gameLoopTime of 15 and a board', () => {
     test('Then it should not instanciated any Item', () => {
       const loopTimeGame = 15;
-      const itemManager = new ItemManager(generationItemTime);
+      const itemManager = new ItemManager(board, generationItemTime);
 
-      itemManager.generateItem(ItemType.food, loopTimeGame, board);
+      itemManager.generateItem(ItemType.food, loopTimeGame);
       const items = itemManager.getItems();
 
       expect(items.size).toBe(0);

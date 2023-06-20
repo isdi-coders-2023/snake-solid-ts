@@ -5,11 +5,9 @@ import type DrawableManager from './type';
 class ItemManager implements DrawableManager {
   #generationItemTime: number;
   #drawableItems: Map<number, Item> = new Map<number, Item>();
-  #board: Board;
 
-  constructor(board: Board, generationItemTime = 15000) {
+  constructor(generationItemTime = 15000) {
     this.#generationItemTime = generationItemTime;
-    this.#board = board;
   }
 
   #getRandomInteger(maxNumber: number, minNumber: number): number {
@@ -22,8 +20,8 @@ class ItemManager implements DrawableManager {
     return randomInteger;
   }
 
-  #generateCoordinates() {
-    const { maxX, minX, minY, maxY } = this.#board.getBoundaries();
+  #generateCoordinates(board: Board) {
+    const { maxX, minX, minY, maxY } = board.getBoundaries();
     const randomPositionX = this.#getRandomInteger(maxX, minX);
     const randomPositionY = this.#getRandomInteger(maxY, minY);
 
@@ -33,8 +31,8 @@ class ItemManager implements DrawableManager {
     };
   }
 
-  public generateItem(itemType: ItemType, gameLoopTime: number): void {
-    const newCoordinates = this.#generateCoordinates();
+  public generateItem(itemType: ItemType, gameLoopTime: number, board: Board): void {
+    const newCoordinates = this.#generateCoordinates(board);
     const timeLeft = this.#generationItemTime - gameLoopTime;
 
     if (timeLeft <= 0) {

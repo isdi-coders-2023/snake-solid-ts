@@ -7,10 +7,14 @@ import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
 import { GameLoop } from './GameLoop/GameLoop.js';
 
+export interface Game {
+  start(): void;
+}
+
 /**
  * This clase is responsable of control the game
  */
-export class GameController {
+export class GameController implements Game {
   #renderEngine: ConsoleRenderEngine;
   #itemManager: DrawableManager;
 

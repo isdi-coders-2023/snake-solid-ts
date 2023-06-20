@@ -47,6 +47,10 @@ export class SnakeBody {
     this.#segments.pop();
   }
 
+  changeDirection(direction: Direction): void {
+    this.#direction = direction;
+  }
+
   #createDirectionToCoordinateMap() {
     this.#coordinatesMap.set(Direction.UP, (position: number) => ({
       x: this.#coordinates.x,

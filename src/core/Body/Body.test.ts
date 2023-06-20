@@ -69,4 +69,14 @@ describe('Given a Body', () => {
       });
     });
   });
+  describe('When direction is changed to down', () => {
+    test('Then its next move should be downwards', () => {
+      const body = new SnakeBody(defaultSnakeConfig);
+      const board = new Board();
+      const snakeMovementManager = new MovementManager(board);
+      body.changeDirection(Direction.DOWN);
+      body.move(snakeMovementManager);
+      expect(body.getBodySegments()[0].getCoordinates()).toEqual({ x: 0, y: 1 });
+    });
+  });
 });

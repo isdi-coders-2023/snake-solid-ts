@@ -35,11 +35,21 @@ export class GameController implements Game {
       coordinates: { x: 5, y: 5 },
       direction: Direction.RIGHT,
     });
-    const snakeBody = snake.getBody();
+    const snakeBody = snake.getBodySegments();
 
     const gameLoop = new GameLoop();
 
     const snakeMovementManager = new MovementManager(board);
+
+    this.#renderEngine.addMoveListener(key => {
+      const keyDirectionMap = new Map<string, Direction>([
+        ['w', Direction.UP],
+        ['s', Direction.DOWN],
+        ['a', Direction.LEFT],
+        ['d', Direction.RIGHT],
+      ]);
+      snake.changeDirection(keyDirectionMap.get(key.name)!);
+    });
 
     gameLoop.addAdvanceHandler(() => {
       this.#renderEngine.clearGameScreen();

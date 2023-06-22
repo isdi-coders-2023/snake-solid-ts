@@ -11,17 +11,15 @@ class ItemManager implements DrawableManager {
   }
 
   #getRandomInteger(maxNumber: number, minNumber: number): number {
-    const randomInteger = Math.floor(Math.random() * maxNumber);
-
-    if (randomInteger < minNumber) {
-      return minNumber;
-    }
+    const differenceMaxMin = maxNumber - minNumber;
+    const randomNumberTimesDifferenceMaxMin = Math.random() * differenceMaxMin;
+    const randomInteger = Math.floor(randomNumberTimesDifferenceMaxMin + minNumber);
 
     return randomInteger;
   }
 
   #generateCoordinates(board: Board) {
-    const { maxX, minX, minY, maxY } = board.getBoundaries();
+    const { maxX, maxY, minX, minY } = board.getBoundaries();
     const randomPositionX = this.#getRandomInteger(maxX, minX);
     const randomPositionY = this.#getRandomInteger(maxY, minY);
 

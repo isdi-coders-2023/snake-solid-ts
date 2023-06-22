@@ -1,3 +1,4 @@
+import winston from 'winston';
 import { Board } from '../core/Board/Board.js';
 import ItemManager from '../core/ItemManager/ItemManager.js';
 import { Snake } from '../core/Snake/Snake.js';
@@ -12,6 +13,14 @@ import ReadLineNode from './ReadLineNode/ReadLineNode.js';
 import { type Menu } from './interfaces/Menu.js';
 
 const createNodeMenu = (): Menu => {
+  const logger = winston.createLogger({
+    transports: [
+      new winston.transports.Console({
+        format: winston.format.printf(log => log.message as string),
+      }),
+    ],
+  });
+
   const readline = new ReadLineNode();
 
   const startAction = () => {
@@ -28,9 +37,11 @@ const createNodeMenu = (): Menu => {
     const snakeMovementManager = new MovementManager(board);
     const game = new GameController(itemManager, board, snake, gameLoop, snakeMovementManager);
     game.start();
+    readline.close();
   };
 
   const exitAction = () => {
+    logger.info('See you soon!');
     readline.close();
   };
 
@@ -41,7 +52,7 @@ const createNodeMenu = (): Menu => {
   menuItems.add(startOption);
   menuItems.add(exitOption);
 
-  const nodeMenu = new NodeMenu(menuItems, readline);
+  const nodeMenu = new NodeMenu(menuItems, readline, logger);
 
   return nodeMenu;
 };

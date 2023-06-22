@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@commitlint/cli": "^17.6.5",
-    "blessed": "0.1.81"
+    "blessed": "0.1.81",
+    "winston": "^3.9.0"
   }
 }

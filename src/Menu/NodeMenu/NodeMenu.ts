@@ -1,3 +1,4 @@
+import { type Logger } from 'winston';
 import { type Collection } from '../interfaces/Collection';
 import { type Menu } from '../interfaces/Menu';
 import { type MenuItem } from '../interfaces/MenuItem';
@@ -6,18 +7,20 @@ import { type ReadLineNodeMenu } from '../interfaces/ReadLineNodeMenu';
 class NodeMenu implements Menu {
   #nodeMenuItems: Collection<MenuItem>;
   #readLine: ReadLineNodeMenu;
+  #logger: Logger;
 
-  constructor(menuItems: Collection<MenuItem>, readLine: ReadLineNodeMenu) {
+  constructor(menuItems: Collection<MenuItem>, readLine: ReadLineNodeMenu, logger: Logger) {
     this.#nodeMenuItems = menuItems;
     this.#readLine = readLine;
+    this.#logger = logger;
   }
 
   showMenu(): void {
-    console.log('Select one option:');
+    this.#logger.info('Select one option:');
     const menuItemsList = this.#nodeMenuItems.getList();
 
     menuItemsList.forEach((option, index) => {
-      console.log(`${index + 1}. ${option.getName()}`);
+      this.#logger.info(`${index + 1}. ${option.getName()}`);
     });
   }
 
@@ -33,7 +36,7 @@ class NodeMenu implements Menu {
       .find((menuItem: MenuItem) => menuItem.getValue() === answer);
 
     if (!selectedMenuItem) {
-      console.log('This is an invalid option');
+      this.#logger.info('This is an invalid option');
       this.handleOptionChoose();
     }
 

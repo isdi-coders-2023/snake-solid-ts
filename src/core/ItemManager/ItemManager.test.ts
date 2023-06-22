@@ -1,11 +1,19 @@
 import { Board } from '../Board/Board';
 import Item, { ItemType } from '../Item/Item';
+import { defaultBoardConfig } from '../constants';
+import { type BoardConfig } from '../types';
 import ItemManager from './ItemManager';
 
 describe('Given an ItemManager Class with a generationItemTime of 15 milliseconds', () => {
+  const boardConfig: BoardConfig = {
+    ...defaultBoardConfig,
+    height: 10,
+    width: 10,
+    borderWidth: 1,
+  };
   const generationItemTime = 15;
   const gameLoopTime = 12;
-  const board = new Board();
+  const board = new Board(boardConfig);
 
   describe('When it is defined', () => {
     test('Then it should exist', () => {

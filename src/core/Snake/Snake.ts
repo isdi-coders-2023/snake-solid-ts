@@ -1,7 +1,7 @@
 import { SnakeBody } from '../Body/Body.js';
 import { defaultSnakeConfig } from '../constants.js';
 import { type MovementManager } from '../movement/MovementManager/MovementManager.js';
-import { type SnakeConfig } from '../types';
+import { type Direction, type SnakeConfig } from '../types';
 
 export class Snake {
   #body: SnakeBody;
@@ -14,12 +14,16 @@ export class Snake {
     return this.#body.getLength();
   }
 
-  getBody() {
+  getBodySegments() {
     return this.#body.getBodySegments();
   }
 
   #createBody(config: SnakeConfig) {
     return new SnakeBody(config);
+  }
+
+  changeDirection(direction: Direction) {
+    this.#body.changeDirection(direction);
   }
 
   advance(movementManager: MovementManager) {

@@ -41,7 +41,7 @@ describe('Given a Snake', () => {
     describe('And it is passed length 2 coordinates (0, 0) and direction "right"', () => {
       test('Then it should have 2 body segments with coordinates (0, 0) and (-1, 0)', () => {
         const snake = new Snake({ ...defaultSnakeConfig, length: 2 });
-        const snakeBody = snake.getBody();
+        const snakeBody = snake.getBodySegments();
         const firstSegment = snakeBody[0];
         const secondSegment = snakeBody[1];
 
@@ -52,13 +52,23 @@ describe('Given a Snake', () => {
     describe('And it advances from (0, 0) and direction "right"', () => {
       test('Then its head should have coordinates (1, 0)', () => {
         const snake = new Snake({ ...defaultSnakeConfig, length: 4 });
-        const snakeBody = snake.getBody();
+        const snakeBody = snake.getBodySegments();
         const board = new Board();
         const snakeMovementManager = new MovementManager(board);
         snake.advance(snakeMovementManager);
         const firstSegment = snakeBody[0];
         expect(firstSegment.getCoordinates()).toStrictEqual({ x: 1, y: 0 });
       });
+    });
+  });
+  describe('When direction changes to down', () => {
+    test('Then its next movement should be downwards', () => {
+      const snake = new Snake();
+      const board = new Board();
+      const snakeMovementManager = new MovementManager(board);
+      snake.changeDirection(Direction.DOWN);
+      snake.advance(snakeMovementManager);
+      expect(snake.getBodySegments()[0].getCoordinates()).toEqual({ x: 0, y: 1 });
     });
   });
 });

@@ -4,7 +4,7 @@ export class Border implements Drawable {
   #coordinates: Coordinates;
   #color: string;
 
-  constructor(coordinates: Coordinates, color = 'red') {
+  constructor(coordinates: Coordinates, color = 'yellow') {
     this.#coordinates = coordinates;
     this.#color = color;
   }

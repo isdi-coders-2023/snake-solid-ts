@@ -1,12 +1,13 @@
-import { Board } from '../core/Board/Board.js';
+import { type Board } from '../core/Board/Board.js';
 import { ItemType } from '../core/Item/Item.js';
 import type DrawableManager from '../core/ItemManager/type.js';
-import { Snake } from '../core/Snake/Snake.js';
-import { MovementManager } from '../core/movement/MovementManager/MovementManager.js';
+import { type Snake } from '../core/Snake/Snake.js';
+import { type MovementManager } from '../core/movement/MovementManager/MovementManager.js';
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
+import { type Drawable } from '../ui/render-engine.js';
 import { EngineCollisionManager } from './EngineCollisionManager/EngineCollisionManager.js';
-import { GameLoop } from './GameLoop/GameLoop.js';
+import { type GameLoop } from './GameLoop/GameLoop.js';
 
 export interface Game {
   start(): void;
@@ -18,11 +19,25 @@ export interface Game {
 export class GameController implements Game {
   #renderEngine: ConsoleRenderEngine;
   #itemManager: DrawableManager;
+  #board: Board;
+  #snake: Snake;
+  #gameLoop: GameLoop;
+  #snakeMovementManager: MovementManager;
 
-  constructor(itemManager: DrawableManager) {
+  constructor(
+    itemManager: DrawableManager,
+    board: Board,
+    snake: Snake,
+    gameLoop: GameLoop,
+    snakeMovementManager: MovementManager,
+  ) {
     /** SORRY FOR THIS SOLID VIOLATION */
     this.#renderEngine = new ConsoleRenderEngine();
     this.#itemManager = itemManager;
+    this.#board = board;
+    this.#snake = snake;
+    this.#gameLoop = gameLoop;
+    this.#snakeMovementManager = snakeMovementManager;
   }
 
   start() {
@@ -33,20 +48,9 @@ export class GameController implements Game {
      *  3. Renders the entire UI
      */
 
-    const board = new Board({ isInfinite: true, height: 20, width: 100, borderWidth: 1 });
-
-    const snake: Snake = new Snake({
-      length: 5,
-      coordinates: { x: 5, y: 5 },
-      direction: Direction.RIGHT,
-    });
-    const snakeBody = snake.getBodySegments();
-
-    const gameLoop = new GameLoop();
+    const snakeBody = this.#snake.getBodySegments();
 
     const collisionManager = new EngineCollisionManager();
-
-    const snakeMovementManager = new MovementManager(board);
 
     this.#renderEngine.addMoveListener(key => {
       const keyDirectionMap = new Map<string, Direction>([
@@ -57,16 +61,26 @@ export class GameController implements Game {
       ]);
 
       if (Array.from(keyDirectionMap.keys()).includes(key.name)) {
-        snake.changeDirection(keyDirectionMap.get(key.name)!);
+        this.#snake.changeDirection(keyDirectionMap.get(key.name)!);
       }
     });
 
-    gameLoop.addAdvanceHandler(() => {
-      this.#renderEngine.clearGameScreen();
+    this.#gameLoop.addResetHandler(() => {
+      this.#resetHandler();
+    });
 
-      snake.advance(snakeMovementManager);
+    this.#gameLoop.addAdvanceHandler(() => {
+      this.#snake.advance(this.#snakeMovementManager);
 
-      this.#itemManager.generateItem(ItemType.food, gameLoop.getTotalRunningTime(), board);
+      this.#drawElements(snakeBody);
+    });
+
+    this.#gameLoop.addAdvanceHandler(() => {
+      this.#itemManager.generateItem(
+        ItemType.food,
+        this.#gameLoop.getTotalRunningTime(),
+        this.#board,
+      );
 
       const snakeHead = snakeBody[0];
 
@@ -79,24 +93,32 @@ export class GameController implements Game {
 
         this.#renderEngine.drawElement(item);
       }
-
-      for (const bodySegment of snakeBody) {
-        this.#renderEngine.drawElement(bodySegment);
-      }
-
-      this.#drawBorders(board);
-
-      this.#renderEngine.render();
     });
 
-    gameLoop.start();
+    this.#gameLoop.addAdvanceHandler(() => {
+      const borders = this.#board.getBorders();
+
+      this.#drawElements(borders);
+    });
+
+    this.#gameLoop.addRenderHandler(() => {
+      this.#renderHandler();
+    });
+
+    this.#gameLoop.start();
   }
 
-  #drawBorders(board: Board) {
-    const boardBorders = board.getBorders();
-
-    for (const border of boardBorders) {
-      this.#renderEngine.drawElement(border);
+  #drawElements(drawables: Drawable[]) {
+    for (const drawable of drawables) {
+      this.#renderEngine.drawElement(drawable);
     }
+  }
+
+  #resetHandler() {
+    this.#renderEngine.clearGameScreen();
+  }
+
+  #renderHandler() {
+    this.#renderEngine.render();
   }
 }

@@ -17,7 +17,7 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
 
   describe('When it is defined', () => {
     test('Then it should exist', () => {
-      const itemManager = new ItemManager(generationItemTime);
+      const itemManager = new ItemManager();
 
       expect(itemManager).toBeDefined();
     });

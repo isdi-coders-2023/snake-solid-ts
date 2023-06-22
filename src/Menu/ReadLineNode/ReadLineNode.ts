@@ -15,12 +15,7 @@ export default class ReadLineNode implements ReadLineNodeMenu {
     this.#readLine.question(question, callback);
   }
 
-  log(message: string): void {
-    console.log(message);
-  }
-
   close(): void {
-    this.log('See you soon!');
     this.#readLine.close();
   }
 }

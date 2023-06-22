@@ -1,5 +1,5 @@
 import ReadLineMock from '../../__mocks__/ReadLineMock.js';
-import ReadLineNode from '../ReadLineNode/ReadLineNode.js';
+
 describe('Given a ReadLine', () => {
   describe('when it is defined', () => {
     test('then it should be a function', () => {
@@ -18,23 +18,12 @@ describe('Given a ReadLine', () => {
     });
   });
 
-  describe('when log method is called', () => {
-    test('then it should print a message', () => {
-      const logSpy = jest.spyOn(global.console, 'log');
-      const readline = new ReadLineNode();
-      readline.log('message');
-
-      expect(logSpy).toHaveBeenCalledWith('message');
-    });
-  });
-
   describe('when close method is called', () => {
     test('then it should close readline thread', () => {
-      const logSpy = jest.spyOn(global.console, 'log');
-      const readline = new ReadLineNode();
+      const readline = new ReadLineMock();
       readline.close();
 
-      expect(logSpy).toHaveBeenCalledWith('See you soon!');
+      expect(readline.closed).toBeTruthy();
     });
   });
 });

@@ -3,6 +3,7 @@ import type Item from '../Item/Item';
 import { type ItemType } from '../Item/Item';
 
 interface DrawableManager {
+  delete(number: number): void;
   generateItem(itemType: ItemType, gameLoopTime: number, board: Board): void;
   getItems(): Map<number, Item>;
 }

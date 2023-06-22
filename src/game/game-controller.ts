@@ -50,9 +50,12 @@ export class GameController implements Game {
 
     const snakeBody = this.#snake.getBodySegments();
 
+
     this.#renderEngine.addExitListener(() => {
       process.exit();
     });
+
+    const collisionManager = new EngineCollisionManager();
 
     this.#renderEngine.addMoveListener(key => {
       const keyDirectionMap = new Map<string, Direction>([
@@ -88,10 +91,22 @@ export class GameController implements Game {
       this.#drawElements(snakeBody);
     });
 
-    this.#gameLoop.addAdvanceHandler(gameLoop => {
-      this.#itemManager.generateItem(ItemType.food, gameLoop.getTotalRunningTime(), this.#board);
+    this.#gameLoop.addAdvanceHandler(() => {
+      this.#itemManager.generateItem(
+        ItemType.food,
+        this.#gameLoop.getTotalRunningTime(),
+        this.#board,
+      );
 
-      for (const [, item] of this.#itemManager.getItems()) {
+      const snakeHead = snakeBody[0];
+
+      for (const [number, item] of this.#itemManager.getItems()) {
+        const isCollision = collisionManager.checkCollision(snakeHead, item);
+
+        if (isCollision) {
+          this.#itemManager.delete(number);
+        }
+
         this.#renderEngine.drawElement(item);
       }
     });

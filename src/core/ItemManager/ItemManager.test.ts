@@ -45,4 +45,20 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
       expect(items.size).toBe(0);
     });
   });
+
+  describe('When its method delete is invoked with an item index', () => {
+    test('Then it should delete this item', () => {
+      const itemManager = new ItemManager(generationItemTime);
+
+      itemManager.generateItem(gameLoopTime, board);
+
+      const items = itemManager.getItems();
+
+      for (const [number] of itemManager.getItems()) {
+        itemManager.delete(number);
+      }
+
+      expect(items.size).toBe(0);
+    });
+  });
 });

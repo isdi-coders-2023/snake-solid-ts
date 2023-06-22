@@ -6,7 +6,7 @@ import { type Coordinates } from '../ui/render-engine';
 class ItemManagerMock implements DrawableManager {
   #drawableItems = new Map<number, Item>();
   #coordinates: Coordinates;
-  #generationItemTime = 15000;
+  #itemLifespan = 15000;
 
   constructor(coordinates: Coordinates) {
     this.#coordinates = coordinates;
@@ -21,7 +21,7 @@ class ItemManagerMock implements DrawableManager {
   }
 
   generateItem(gameLoopTime: number): void {
-    const newItem = new FoodItem(this.#coordinates, this.#generationItemTime);
+    const newItem = new FoodItem(this.#coordinates, this.#itemLifespan);
 
     this.#drawableItems.set(gameLoopTime, newItem);
   }

@@ -94,6 +94,11 @@ export class GameController implements Game {
 
       for (const [number, item] of this.#itemManager.getItems()) {
         const isCollision = collisionManager.checkCollision(snakeHead, item);
+        const isItemDead = item.isDead();
+
+        if (isItemDead) {
+          this.#itemManager.delete(number);
+        }
 
         if (isCollision) {
           this.#itemManager.delete(number);

@@ -5,10 +5,12 @@ import type DrawableManager from './type';
 
 class ItemManager implements DrawableManager {
   #generationItemTime: number;
+  #itemLifespan: number;
   #drawableItems: Map<number, Item> = new Map<number, Item>();
 
-  constructor(generationItemTime = 15000) {
+  constructor(generationItemTime = 15000, itemLifespan = 20000) {
     this.#generationItemTime = generationItemTime;
+    this.#itemLifespan = itemLifespan;
   }
 
   #getRandomInteger(maxNumber: number, minNumber: number): number {
@@ -38,7 +40,7 @@ class ItemManager implements DrawableManager {
       return;
     }
 
-    this.#drawableItems.set(gameLoopTime, new FoodItem(newCoordinates, 20));
+    this.#drawableItems.set(gameLoopTime, new FoodItem(newCoordinates, this.#itemLifespan));
   }
 
   public getItems(): Map<number, Item> {

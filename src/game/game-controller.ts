@@ -24,6 +24,7 @@ export class GameController implements Game {
   #gameLoop: GameLoop;
   #snakeMovementManager: MovementManager;
 
+  // eslint-disable-next-line max-params
   constructor(
     itemManager: DrawableManager,
     board: Board,
@@ -50,7 +51,9 @@ export class GameController implements Game {
 
     const snakeBody = this.#snake.getBodySegments();
 
-    const collisionManager = new EngineCollisionManager();
+    this.#renderEngine.addExitListener(() => {
+      process.exit();
+    });
 
     this.#renderEngine.addMoveListener(key => {
       const keyDirectionMap = new Map<string, Direction>([
@@ -64,6 +67,17 @@ export class GameController implements Game {
         this.#snake.changeDirection(keyDirectionMap.get(key.name)!);
       }
     });
+
+    const collisionManager = new EngineCollisionManager();
+    const checkSnakeCollision = () => {
+      for (let i = 1; i < snakeBody.length; i++) {
+        if (collisionManager.checkCollision(snakeBody[0], snakeBody[i])) {
+          return true;
+        }
+      }
+
+      return false;
+    };
 
     this.#gameLoop.addResetHandler(() => {
       this.#resetHandler();
@@ -99,6 +113,13 @@ export class GameController implements Game {
       const borders = this.#board.getBorders();
 
       this.#drawElements(borders);
+    });
+
+    this.#gameLoop.addCollisionHandler(gameLoop => {
+      if (checkSnakeCollision()) {
+        this.#renderEngine.showGameOver();
+        gameLoop.stop();
+      }
     });
 
     this.#gameLoop.addRenderHandler(() => {

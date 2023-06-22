@@ -38,6 +38,7 @@ class NodeMenu implements Menu {
     }
 
     if (selectedMenuItem) {
+      this.#readLine.close();
       selectedMenuItem.executeOption();
     }
   }

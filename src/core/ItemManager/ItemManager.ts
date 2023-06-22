@@ -1,5 +1,6 @@
 import { type Board } from '../Board/Board.js';
-import Item, { type ItemType } from '../Item/Item.js';
+import FoodItem from '../Item/FoodItem/FoodItem.js';
+import type Item from '../Item/Item.js';
 import type DrawableManager from './type';
 
 class ItemManager implements DrawableManager {
@@ -29,7 +30,7 @@ class ItemManager implements DrawableManager {
     };
   }
 
-  public generateItem(itemType: ItemType, gameLoopTime: number, board: Board): void {
+  public generateItem(gameLoopTime: number, board: Board): void {
     const newCoordinates = this.#generateCoordinates(board);
     const timeLeft = this.#generationItemTime - gameLoopTime;
 
@@ -37,7 +38,7 @@ class ItemManager implements DrawableManager {
       return;
     }
 
-    this.#drawableItems.set(gameLoopTime, new Item(itemType, newCoordinates));
+    this.#drawableItems.set(gameLoopTime, new FoodItem(newCoordinates, 20));
   }
 
   public getItems(): Map<number, Item> {

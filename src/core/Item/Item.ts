@@ -1,35 +1,23 @@
 import { type Coordinates, type Drawable } from '../../ui/render-engine';
 
-export enum ItemType {
-  food,
-}
-
-class Item implements Drawable {
+abstract class Item implements Drawable {
   #coordinates: Coordinates;
-  #itemType: ItemType;
-  #colorItem: string;
+  #dead: Date;
 
-  constructor(itemType: ItemType, coordinates: Coordinates) {
-    this.#itemType = itemType;
+  constructor(coordinates: Coordinates, lifespan: number) {
     this.#coordinates = coordinates;
-    this.#colorItem = this.#generateItemColor();
-  }
-
-  public getColor(): string {
-    return this.#colorItem;
+    this.#dead = new Date(Date.now() + lifespan);
   }
 
   public getCoordinates(): Coordinates {
     return this.#coordinates;
   }
 
-  #generateItemColor(): string {
-    const itemColor = {
-      [this.#itemType]: 'red',
-    };
-
-    return itemColor[this.#itemType];
+  public isDead(): boolean {
+    return Date.now() >= this.#dead.getTime();
   }
+
+  abstract getColor(): string;
 }
 
 export default Item;

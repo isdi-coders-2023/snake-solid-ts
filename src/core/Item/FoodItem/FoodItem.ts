@@ -1,6 +1,6 @@
-import ItemAbstract from '../ItemAbstract';
+import Item from '../Item.js';
 
-class FoodItem extends ItemAbstract {
+class FoodItem extends Item {
   #color = 'red';
 
   getColor(): string {

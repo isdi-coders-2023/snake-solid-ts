@@ -1,10 +1,12 @@
-import Item, { type ItemType } from '../core/Item/Item';
+import FoodItem from '../core/Item/FoodItem/FoodItem';
+import type Item from '../core/Item/Item';
 import type DrawableManager from '../core/ItemManager/type';
 import { type Coordinates } from '../ui/render-engine';
 
 class ItemManagerMock implements DrawableManager {
   #drawableItems = new Map<number, Item>();
   #coordinates: Coordinates;
+  #generationItemTime = 15000;
 
   constructor(coordinates: Coordinates) {
     this.#coordinates = coordinates;
@@ -18,8 +20,8 @@ class ItemManagerMock implements DrawableManager {
     this.#drawableItems.delete(index);
   }
 
-  generateItem(itemType: ItemType, gameLoopTime: number): void {
-    const newItem = new Item(itemType, this.#coordinates);
+  generateItem(gameLoopTime: number): void {
+    const newItem = new FoodItem(this.#coordinates, this.#generationItemTime);
 
     this.#drawableItems.set(gameLoopTime, newItem);
   }

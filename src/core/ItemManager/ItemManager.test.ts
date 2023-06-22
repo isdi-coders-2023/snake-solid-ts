@@ -1,5 +1,5 @@
 import { Board } from '../Board/Board';
-import Item, { ItemType } from '../Item/Item';
+import Item from '../Item/Item';
 import { defaultBoardConfig } from '../constants';
 import { type BoardConfig } from '../types';
 import ItemManager from './ItemManager';
@@ -27,7 +27,7 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
     test('Then it should instanciated an Item', () => {
       const itemManager = new ItemManager(generationItemTime);
 
-      itemManager.generateItem(ItemType.food, gameLoopTime, board);
+      itemManager.generateItem(gameLoopTime, board);
       const items = itemManager.getItems();
 
       expect(items.get(gameLoopTime)).toBeInstanceOf(Item);
@@ -39,7 +39,7 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
       const loopTimeGame = 15;
       const itemManager = new ItemManager(generationItemTime);
 
-      itemManager.generateItem(ItemType.food, loopTimeGame, board);
+      itemManager.generateItem(loopTimeGame, board);
       const items = itemManager.getItems();
 
       expect(items.size).toBe(0);

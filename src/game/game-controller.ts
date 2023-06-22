@@ -1,5 +1,4 @@
 import { type Board } from '../core/Board/Board.js';
-import { ItemType } from '../core/Item/Item.js';
 import type DrawableManager from '../core/ItemManager/type.js';
 import { type Snake } from '../core/Snake/Snake.js';
 import { type MovementManager } from '../core/movement/MovementManager/MovementManager.js';
@@ -76,13 +75,8 @@ export class GameController implements Game {
     });
 
     this.#gameLoop.addAdvanceHandler(() => {
-      this.#itemManager.generateItem(
-        ItemType.food,
-        this.#gameLoop.getTotalRunningTime(),
-        this.#board,
-      );
-
       const snakeHead = snakeBody[0];
+      this.#itemManager.generateItem(this.#gameLoop.getTotalRunningTime(), this.#board);
 
       for (const [number, item] of this.#itemManager.getItems()) {
         const isCollision = collisionManager.checkCollision(snakeHead, item);

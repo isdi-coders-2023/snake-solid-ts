@@ -1,4 +1,9 @@
+import { Board } from '../core/Board/Board.js';
 import ItemManager from '../core/ItemManager/ItemManager.js';
+import { Snake } from '../core/Snake/Snake.js';
+import { MovementManager } from '../core/movement/MovementManager/MovementManager.js';
+import { Direction } from '../core/types.js';
+import { GameLoop } from '../game/GameLoop/GameLoop.js';
 import { GameController } from '../game/game-controller.js';
 import MenuItemsCollection from './MenuItemsCollection/MenuItemsCollection.js';
 import NodeMenu from './NodeMenu/NodeMenu.js';
@@ -11,7 +16,15 @@ const createNodeMenu = (): Menu => {
 
   const startAction = () => {
     const itemManager = new ItemManager();
-    const game = new GameController(itemManager);
+    const board = new Board({ isInfinite: true, height: 20, width: 100, borderWidth: 1 });
+    const snake: Snake = new Snake({
+      length: 5,
+      coordinates: { x: 5, y: 5 },
+      direction: Direction.RIGHT,
+    });
+    const gameLoop = new GameLoop();
+    const snakeMovementManager = new MovementManager(board);
+    const game = new GameController(itemManager, board, snake, gameLoop, snakeMovementManager);
     game.start();
   };
 

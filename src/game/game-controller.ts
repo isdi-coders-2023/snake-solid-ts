@@ -50,6 +50,10 @@ export class GameController implements Game {
 
     const snakeBody = this.#snake.getBodySegments();
 
+    this.#renderEngine.addExitListener(() => {
+      process.exit();
+    });
+
     this.#renderEngine.addMoveListener(key => {
       const keyDirectionMap = new Map<string, Direction>([
         ['w', Direction.UP],
@@ -100,6 +104,7 @@ export class GameController implements Game {
 
     this.#gameLoop.addCollisionHandler(gameLoop => {
       if (checkSnakeCollision()) {
+        this.#renderEngine.showGameOver();
         gameLoop.stop();
       }
     });

@@ -43,5 +43,9 @@ class ItemManager implements DrawableManager {
   public getItems(): Map<number, Item> {
     return this.#drawableItems;
   }
+
+  public delete(index: number): void {
+    this.#drawableItems.delete(index);
+  }
 }
 export default ItemManager;

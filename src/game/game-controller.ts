@@ -5,6 +5,7 @@ import { Snake } from '../core/Snake/Snake.js';
 import { MovementManager } from '../core/movement/MovementManager/MovementManager.js';
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
+import { EngineCollisionManager } from './EngineCollisionManager/EngineCollisionManager.js';
 import { GameLoop } from './GameLoop/GameLoop.js';
 
 export interface Game {
@@ -43,6 +44,8 @@ export class GameController implements Game {
 
     const gameLoop = new GameLoop();
 
+    const collisionManager = new EngineCollisionManager();
+
     const snakeMovementManager = new MovementManager(board);
 
     this.#renderEngine.addMoveListener(key => {
@@ -65,7 +68,15 @@ export class GameController implements Game {
 
       this.#itemManager.generateItem(ItemType.food, gameLoop.getTotalRunningTime(), board);
 
-      for (const [, item] of this.#itemManager.getItems()) {
+      const snakeHead = snakeBody[0];
+
+      for (const [number, item] of this.#itemManager.getItems()) {
+        const isCollision = collisionManager.checkCollision(snakeHead, item);
+
+        if (isCollision) {
+          this.#itemManager.delete(number);
+        }
+
         this.#renderEngine.drawElement(item);
       }
 

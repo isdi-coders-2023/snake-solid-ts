@@ -14,6 +14,10 @@ class ItemManagerMock implements DrawableManager {
     return this.#drawableItems;
   }
 
+  delete(index: number): void {
+    this.#drawableItems.delete(index);
+  }
+
   generateItem(itemType: ItemType, gameLoopTime: number): void {
     const newItem = new Item(itemType, this.#coordinates);
 

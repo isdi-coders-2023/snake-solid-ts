@@ -16,10 +16,12 @@ const createNodeMenu = (): Menu => {
 
   const startAction = () => {
     const itemManager = new ItemManager();
-    const board = new Board({ isInfinite: true, height: 20, width: 100, borderWidth: 1 });
+    const height = 20;
+    const width = 100;
+    const board = new Board({ isInfinite: true, height, width, borderWidth: 1 });
     const snake: Snake = new Snake({
       length: 5,
-      coordinates: { x: 5, y: 5 },
+      coordinates: { x: width / 2, y: height / 2 },
       direction: Direction.RIGHT,
     });
     const gameLoop = new GameLoop();

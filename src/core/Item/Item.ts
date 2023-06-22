@@ -9,9 +9,9 @@ class Item implements Drawable {
   #itemType: ItemType;
   #colorItem: string;
 
-  constructor(itemType: ItemType) {
-    this.#coordinates = this.#generateCoordinates();
+  constructor(itemType: ItemType, coordinates: Coordinates) {
     this.#itemType = itemType;
+    this.#coordinates = coordinates;
     this.#colorItem = this.#generateItemColor();
   }
 
@@ -21,20 +21,6 @@ class Item implements Drawable {
 
   public getCoordinates(): Coordinates {
     return this.#coordinates;
-  }
-
-  #getRandomInteger(maxNumber: number): number {
-    return Math.floor(Math.random() * maxNumber);
-  }
-
-  #generateCoordinates() {
-    const randomPositionX = this.#getRandomInteger(100);
-    const randomPositionY = this.#getRandomInteger(100);
-
-    return {
-      x: randomPositionX,
-      y: randomPositionY,
-    };
   }
 
   #generateItemColor(): string {

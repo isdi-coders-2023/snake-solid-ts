@@ -1,4 +1,6 @@
 import { Board } from '../core/Board/Board.js';
+import { ItemType } from '../core/Item/Item.js';
+import type DrawableManager from '../core/ItemManager/type.js';
 import { Snake } from '../core/Snake/Snake.js';
 import { MovementManager } from '../core/movement/MovementManager/MovementManager.js';
 import { Direction } from '../core/types.js';
@@ -14,10 +16,12 @@ export interface Game {
  */
 export class GameController implements Game {
   #renderEngine: ConsoleRenderEngine;
+  #itemManager: DrawableManager;
 
-  constructor() {
+  constructor(itemManager: DrawableManager) {
     /** SORRY FOR THIS SOLID VIOLATION */
     this.#renderEngine = new ConsoleRenderEngine();
+    this.#itemManager = itemManager;
   }
 
   start() {
@@ -58,6 +62,12 @@ export class GameController implements Game {
       this.#renderEngine.clearGameScreen();
 
       snake.advance(snakeMovementManager);
+
+      this.#itemManager.generateItem(ItemType.food, gameLoop.getTotalRunningTime(), board);
+
+      for (const [, item] of this.#itemManager.getItems()) {
+        this.#renderEngine.drawElement(item);
+      }
 
       for (const bodySegment of snakeBody) {
         this.#renderEngine.drawElement(bodySegment);

@@ -1,3 +1,4 @@
+import ItemManager from '../core/ItemManager/ItemManager.js';
 import { GameController } from '../game/game-controller.js';
 import MenuItemsCollection from './MenuItemsCollection/MenuItemsCollection.js';
 import NodeMenu from './NodeMenu/NodeMenu.js';
@@ -9,7 +10,8 @@ const createNodeMenu = (): Menu => {
   const readline = new ReadLineNode();
 
   const startAction = () => {
-    const game = new GameController();
+    const itemManager = new ItemManager();
+    const game = new GameController(itemManager);
     game.start();
   };
 

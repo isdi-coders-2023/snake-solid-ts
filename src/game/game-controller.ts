@@ -6,6 +6,7 @@ import { type MovementManager } from '../core/movement/MovementManager/MovementM
 import { Direction } from '../core/types.js';
 import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
 import { type Drawable } from '../ui/render-engine.js';
+import { EngineCollisionManager } from './EngineCollisionManager/EngineCollisionManager.js';
 import { type GameLoop } from './GameLoop/GameLoop.js';
 
 export interface Game {
@@ -62,6 +63,17 @@ export class GameController implements Game {
       }
     });
 
+    const collisionManager = new EngineCollisionManager();
+    const checkSnakeCollision = () => {
+      for (let i = 1; i < snakeBody.length; i++) {
+        if (collisionManager.checkCollision(snakeBody[0], snakeBody[i])) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
     this.#gameLoop.addResetHandler(() => {
       this.#resetHandler();
     });
@@ -84,6 +96,12 @@ export class GameController implements Game {
       const borders = this.#board.getBorders();
 
       this.#drawElements(borders);
+    });
+
+    this.#gameLoop.addCollisionHandler(gameLoop => {
+      if (checkSnakeCollision()) {
+        gameLoop.stop();
+      }
     });
 
     this.#gameLoop.addRenderHandler(() => {

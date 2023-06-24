@@ -20,7 +20,7 @@ class ItemManagerMock implements DrawableManager {
     this.#drawableItems.delete(index);
   }
 
-  generateItem(gameLoopTime: number): void {
+  createItemOnGenerationInterval(gameLoopTime: number): void {
     const newItem = new FoodItem(this.#coordinates, this.#itemLifespan);
 
     this.#drawableItems.set(gameLoopTime, newItem);

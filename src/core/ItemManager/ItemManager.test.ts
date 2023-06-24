@@ -1,5 +1,5 @@
 import { Board } from '../Board/Board';
-import Item from '../Item/Item';
+import FoodItem from '../Item/FoodItem/FoodItem';
 import { defaultBoardConfig } from '../constants';
 import { type BoardConfig } from '../types';
 import ItemManager from './ItemManager';
@@ -23,23 +23,25 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
     });
   });
 
-  describe('When its method generateItem is invoked with an ItemType food, a gameLoopTime of 12 and a board', () => {
+  describe('When its method createItemOnGenerationInterval is invoked with an ItemType food, a gameLoopTime of 12 and a board', () => {
     test('Then it should instanciated an Item', () => {
       const itemManager = new ItemManager(generationItemTime);
 
-      itemManager.generateItem(gameLoopTime, board);
+      jest.advanceTimersByTime(generationItemTime);
+
+      itemManager.createItemOnGenerationInterval(gameLoopTime, board);
       const items = itemManager.getItems();
 
-      expect(items.get(gameLoopTime)).toBeInstanceOf(Item);
+      expect(items.get(gameLoopTime)).toBeInstanceOf(FoodItem);
     });
   });
 
-  describe('When its method generateItem is invoked with an ItemType food, a gameLoopTime of 15 and a board', () => {
+  describe('When its method createItemOnGenerationInterval is invoked with an ItemType food, a gameLoopTime of 15 and a board', () => {
     test('Then it should not instanciated any Item', () => {
       const loopTimeGame = 15;
       const itemManager = new ItemManager(generationItemTime);
 
-      itemManager.generateItem(loopTimeGame, board);
+      itemManager.createItemOnGenerationInterval(loopTimeGame, board);
       const items = itemManager.getItems();
 
       expect(items.size).toBe(0);
@@ -50,7 +52,7 @@ describe('Given an ItemManager Class with a generationItemTime of 15 millisecond
     test('Then it should delete this item', () => {
       const itemManager = new ItemManager(generationItemTime);
 
-      itemManager.generateItem(gameLoopTime, board);
+      itemManager.createItemOnGenerationInterval(gameLoopTime, board);
 
       const items = itemManager.getItems();
 

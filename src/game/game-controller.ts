@@ -90,7 +90,11 @@ export class GameController implements Game {
 
     this.#gameLoop.addAdvanceHandler(() => {
       const snakeHead = snakeBody[0];
-      this.#itemManager.generateItem(this.#gameLoop.getTotalRunningTime(), this.#board);
+
+      this.#itemManager.createItemOnGenerationInterval(
+        this.#gameLoop.getTotalRunningTime(),
+        this.#board,
+      );
 
       for (const [number, item] of this.#itemManager.getItems()) {
         const isCollision = collisionManager.checkCollision(snakeHead, item);

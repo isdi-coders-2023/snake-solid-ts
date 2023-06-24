@@ -7,10 +7,12 @@ class ItemManager implements DrawableManager {
   #generationItemTime: number;
   #itemLifespan: number;
   #drawableItems: Map<number, Item> = new Map<number, Item>();
+  #timeLastGeneratedItem: number;
 
   constructor(generationItemTime = 15000, itemLifespan = 20000) {
     this.#generationItemTime = generationItemTime;
     this.#itemLifespan = itemLifespan;
+    this.#timeLastGeneratedItem = Date.now();
   }
 
   #getRandomInteger(maxNumber: number, minNumber: number): number {
@@ -32,15 +34,15 @@ class ItemManager implements DrawableManager {
     };
   }
 
-  public generateItem(gameLoopTime: number, board: Board): void {
+  public createItemOnGenerationInterval(gameLoopTime: number, board: Board): void {
     const newCoordinates = this.#generateCoordinates(board);
-    const timeLeft = this.#generationItemTime - gameLoopTime;
+    const timeNow = Date.now();
+    const timePass = timeNow - this.#timeLastGeneratedItem;
 
-    if (timeLeft <= 0) {
-      return;
+    if (timePass >= this.#generationItemTime) {
+      this.#drawableItems.set(gameLoopTime, new FoodItem(newCoordinates, this.#itemLifespan));
+      this.#timeLastGeneratedItem = timeNow;
     }
-
-    this.#drawableItems.set(gameLoopTime, new FoodItem(newCoordinates, this.#itemLifespan));
   }
 
   public getItems(): Map<number, Item> {

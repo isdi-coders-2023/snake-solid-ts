@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import winston from 'winston';
 import { Board } from '../core/Board/Board.js';
 import ItemManager from '../core/ItemManager/ItemManager.js';
@@ -6,6 +7,7 @@ import { MovementManager } from '../core/movement/MovementManager/MovementManage
 import { Direction } from '../core/types.js';
 import { GameLoop } from '../game/GameLoop/GameLoop.js';
 import { GameController } from '../game/game-controller.js';
+import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
 import MenuItemsCollection from './MenuItemsCollection/MenuItemsCollection.js';
 import NodeMenu from './NodeMenu/NodeMenu.js';
 import NodeMenuItem from './NodeMenuItem/NodeMenuItem.js';
@@ -33,9 +35,17 @@ const createNodeMenu = (): Menu => {
       coordinates: { x: width / 2, y: height / 2 },
       direction: Direction.RIGHT,
     });
-    const gameLoop = new GameLoop();
+    const gameLoop = new GameLoop(randomUUID);
     const snakeMovementManager = new MovementManager(board);
-    const game = new GameController(itemManager, board, snake, gameLoop, snakeMovementManager);
+    const renderEngine = new ConsoleRenderEngine();
+    const game = new GameController(
+      itemManager,
+      board,
+      snake,
+      gameLoop,
+      snakeMovementManager,
+      renderEngine,
+    );
     game.start();
     readline.close();
   };

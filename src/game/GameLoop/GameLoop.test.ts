@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { GameLoop } from './GameLoop';
 import { type GameLoopHandler } from './types';
 
@@ -8,17 +9,17 @@ beforeEach(() => {
 describe('Given a GameLoop', () => {
   describe('When it is created', () => {
     test('Then it should be an object', () => {
-      expect(typeof new GameLoop()).toBe('object');
+      expect(typeof new GameLoop(randomUUID)).toBe('object');
     });
 
     test('Then its speed should be 200', () => {
-      expect(new GameLoop().getCurrentSpeed()).toBe(200);
+      expect(new GameLoop(randomUUID).getCurrentSpeed()).toBe(200);
     });
   });
 
   describe('When it is started', () => {
     test('Then it should advance all the advanceables', () => {
-      const gameLoop = new GameLoop();
+      const gameLoop = new GameLoop(randomUUID);
 
       const advanceHandler1: GameLoopHandler = jest.fn();
       const advanceHandler2: GameLoopHandler = jest.fn();
@@ -40,7 +41,7 @@ describe('Given a GameLoop', () => {
 
       const advanceHandler1: GameLoopHandler = jest.fn();
       const advanceHandler2: GameLoopHandler = jest.fn();
-      const gameLoop = new GameLoop(1000);
+      const gameLoop = new GameLoop(randomUUID, 1000);
 
       gameLoop.addAdvanceHandler(advanceHandler1);
       gameLoop.addAdvanceHandler(advanceHandler2);
@@ -60,7 +61,7 @@ describe('Given a GameLoop', () => {
       expect.assertions(1);
       const advanceHandler1: GameLoopHandler = jest.fn();
 
-      const gameLoop = new GameLoop(1000);
+      const gameLoop = new GameLoop(randomUUID, 1000);
 
       gameLoop.addAdvanceHandler(advanceHandler1);
       gameLoop.start();
@@ -79,7 +80,7 @@ describe('Given a GameLoop', () => {
       expect.assertions(1);
       const advanceHandler1: GameLoopHandler = jest.fn();
 
-      const gameLoop = new GameLoop(1000);
+      const gameLoop = new GameLoop(randomUUID, 1000);
 
       gameLoop.addAdvanceHandler(advanceHandler1);
       gameLoop.start();
@@ -101,10 +102,9 @@ describe('Given a GameLoop', () => {
     test('Then the total running time should be 1000ms', done => {
       expect.assertions(1);
 
-      const gameLoop = new GameLoop();
+      const gameLoop = new GameLoop(randomUUID);
 
       gameLoop.start();
-
       setTimeout(() => {
         gameLoop.stop();
         expect(gameLoop.getTotalRunningTime()).toBe(1000);
@@ -122,7 +122,7 @@ describe('Given a GameLoop', () => {
       const collisionHandler: GameLoopHandler = jest.fn();
       const renderHandler: GameLoopHandler = jest.fn();
 
-      const gameLoop = new GameLoop();
+      const gameLoop = new GameLoop(randomUUID);
 
       gameLoop.addResetHandler(resetHandler);
       gameLoop.addAdvanceHandler(advanceHandler);
@@ -159,7 +159,7 @@ describe('Given a GameLoop', () => {
       const collisionHandler: GameLoopHandler = jest.fn();
       const renderHandler: GameLoopHandler = jest.fn();
 
-      const gameLoop = new GameLoop();
+      const gameLoop = new GameLoop(randomUUID);
 
       const resetHandlerId = gameLoop.addResetHandler(resetHandler);
       const advanceHandlerId = gameLoop.addAdvanceHandler(advanceHandler);

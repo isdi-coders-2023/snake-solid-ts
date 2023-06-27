@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { defaultGameSpeed } from '../../core/constants.js';
 import {
   type AdvancePhase,
@@ -18,9 +17,11 @@ export class GameLoop implements LifeCycle, AdvancePhase, CollisionPhase, Render
   #collisionHandlers = new Map<string, GameLoopHandler>();
   #renderHandlers = new Map<string, GameLoopHandler>();
   #resetHandlers = new Map<string, GameLoopHandler>();
+  #uuidGenerator: () => string;
 
-  constructor(speed = defaultGameSpeed) {
+  constructor(uuidGenerator: () => string, speed = defaultGameSpeed) {
     this.#speed = speed;
+    this.#uuidGenerator = uuidGenerator;
   }
 
   start() {
@@ -85,7 +86,7 @@ export class GameLoop implements LifeCycle, AdvancePhase, CollisionPhase, Render
   }
 
   #createHandlerId(): string {
-    return randomUUID();
+    return this.#uuidGenerator();
   }
 
   addResetHandler(resetHandler: GameLoopHandler): string {

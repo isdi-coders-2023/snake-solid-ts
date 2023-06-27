@@ -3,8 +3,7 @@ import type DrawableManager from '../core/ItemManager/type.js';
 import { type Snake } from '../core/Snake/Snake.js';
 import { type MovementManager } from '../core/movement/MovementManager/MovementManager.js';
 import { Direction } from '../core/types.js';
-import { ConsoleRenderEngine } from '../ui/console-render/console-render-engine.js';
-import { type Drawable } from '../ui/render-engine.js';
+import { type Drawable, type SnakeRenderEngine } from '../ui/render-engine.js';
 import { EngineCollisionManager } from './EngineCollisionManager/EngineCollisionManager.js';
 import { type GameLoop } from './GameLoop/GameLoop.js';
 
@@ -16,7 +15,7 @@ export interface Game {
  * This clase is responsable of control the game
  */
 export class GameController implements Game {
-  #renderEngine: ConsoleRenderEngine;
+  #renderEngine: SnakeRenderEngine;
   #itemManager: DrawableManager;
   #board: Board;
   #snake: Snake;
@@ -30,9 +29,9 @@ export class GameController implements Game {
     snake: Snake,
     gameLoop: GameLoop,
     snakeMovementManager: MovementManager,
+    renderEngine: SnakeRenderEngine,
   ) {
-    /** SORRY FOR THIS SOLID VIOLATION */
-    this.#renderEngine = new ConsoleRenderEngine();
+    this.#renderEngine = renderEngine;
     this.#itemManager = itemManager;
     this.#board = board;
     this.#snake = snake;
